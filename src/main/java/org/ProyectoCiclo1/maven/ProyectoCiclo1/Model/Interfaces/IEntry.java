@@ -6,7 +6,9 @@ public interface IEntry {
 	
 	public Integer getID();
 	public String getName();
+	public ISubject getSubject();
 	public LocalDateTime getCreationDate();
 	public void setName(String name);
+	public void setSubject(ISubject subject);
 	
 }
