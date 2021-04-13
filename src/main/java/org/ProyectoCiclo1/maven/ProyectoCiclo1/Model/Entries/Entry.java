@@ -1,11 +1,14 @@
 package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Interfaces.IEntry;
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
+
 import java.time.LocalDateTime;
 
 public class Entry implements IEntry {
 	private Integer ID;
 	private String name;
+	private Subject subject;
 	private LocalDateTime creationDate;
 	
 	public Entry() {
@@ -23,10 +26,16 @@ public class Entry implements IEntry {
 	public String getName() {
 		return this.name;
 	}
+	public Subject getSubject() {
+		return this.subject;
+	}
 	public LocalDateTime getCreationDate() {
 		return this.creationDate;
 	}
 	public void setName(String name) {
 		this.name=name;
+	}
+	public void setSubject(Subject subject) {
+		this.subject=subject;
 	}
 }
