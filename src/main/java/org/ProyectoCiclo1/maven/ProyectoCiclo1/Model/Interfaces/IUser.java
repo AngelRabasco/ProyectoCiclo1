@@ -4,6 +4,6 @@ public interface IUser {
 	
 	public Integer getID();
 	public String getName();
-	public void setName();
+	public void setName(String name);
 	
 }
