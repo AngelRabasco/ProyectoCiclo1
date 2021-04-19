@@ -7,10 +7,13 @@ public class User implements IUser {
 	protected String name;
 	
 	public User() {
-		
+		this(-1,"");
 	}
 	public User(Integer ID, String name) {
 		this.ID=ID;
+		this.name=name;
+	}
+	public User(String name) {
 		this.name=name;
 	}
 	
