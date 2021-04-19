@@ -6,16 +6,16 @@ public class Content implements IContent {
 	private Integer ID;
 	private Entry entry;
 	private Integer type;
-	private String value;
+	private String URL;
 	
 	public Content() {
 		
 	}
-	public Content(Integer ID, Entry entry, Integer type, String value) {
+	public Content(Integer ID, Entry entry, Integer type, String URL) {
 		this.ID=ID;
 		this.entry=entry;
 		this.type=type;
-		this.value=value;
+		this.URL=URL;
 	}
 	
 	public Integer getID() {
@@ -27,7 +27,7 @@ public class Content implements IContent {
 	public Integer getType() {
 		return this.type;
 	}
-	public String getValue() {
-		return this.value;
+	public String getURL() {
+		return this.URL;
 	}
 }
