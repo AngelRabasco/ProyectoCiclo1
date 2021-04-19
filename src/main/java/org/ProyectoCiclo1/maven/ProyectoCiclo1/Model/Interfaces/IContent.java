@@ -5,6 +5,6 @@ public interface IContent{
 	public Integer getID();
 	public IEntry getEntry();
 	public Integer getType();	//Returns 0 (Image) or 1 (Link)
-	public String getValue();	//Returns an image stored on the database as Base64 or the URL
+	public String getURL();		//Returns the URL if the content is a Link
 	
 }
