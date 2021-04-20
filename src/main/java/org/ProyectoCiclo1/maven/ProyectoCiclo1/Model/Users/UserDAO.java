@@ -29,28 +29,6 @@ public class UserDAO extends User {
 		super();
 	}
 	
-	public UserDAO(Integer ID) {
-		//getByID DB
-		//Connection
-		super();
-		Connection con=Connect.getConnection();
-		//Statement
-		if(con!=null) {
-			Statement st;
-			try {
-				st = con.createStatement();
-				String q=getByID+"'"+ID+"'";
-				ResultSet rs=st.executeQuery(q);
-				while(rs.next()) {
-					this.ID=rs.getInt("ID");
-					this.name=rs.getString("name");
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 	public static List<User> searchByID(Integer ID){
 		List<User> queryResult=new ArrayList<User>();
 		Connection con=Connect.getConnection();
