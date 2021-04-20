@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 public class UserDAO extends User {
 	private final static String getByID="SELECT * FROM user WHERE ID=?";
-	private final static String getByName="SELECT * FROM user WHERE name=?";
-	private final static String insertUpdate="INSERT INTO user (ID,name) VALUES (?,?) ON DUPLICATE KEY UPDATE mame=?";
+	private final static String getByName="SELECT * FROM user WHERE Name=?";
+	private final static String insertUpdate="INSERT INTO user (ID,Name) VALUES (?,?) ON DUPLICATE KEY UPDATE Name=?";
 	private final static String delete="DELETE FROM user WHERE ID=?";
 	
 	public UserDAO(Integer ID, String name) {
