@@ -23,6 +23,9 @@ public class User implements IUser {
 	public String getName() {
 		return this.name;
 	}
+	public void setID(Integer ID) {
+		this.ID=ID;
+	}
 	public void setName(String name) {
 		this.name=name;
 	}
