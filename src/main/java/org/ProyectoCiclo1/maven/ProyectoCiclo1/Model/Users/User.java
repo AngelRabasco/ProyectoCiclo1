@@ -29,4 +29,8 @@ public class User implements IUser {
 	public void setName(String name) {
 		this.name=name;
 	}
+	
+	public String toString() {
+		return "User [ID=" + ID + ", name=" + name + "]";
+	}
 }

@@ -8,7 +8,6 @@ public class Subject implements ISubject {
 	protected String name;
 	protected User owner;
 	
-	
 	public Subject() {
 		this(-1,"",new User());
 	}
@@ -39,5 +38,9 @@ public class Subject implements ISubject {
 	}
 	public void setOwner(User owner) {
 		this.owner=owner;
+	}
+	
+	public String toString() {
+		return "Subject [ID=" + ID + ", name=" + name + ", owner=" + owner + "]";
 	}
 }
