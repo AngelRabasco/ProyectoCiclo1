@@ -7,7 +7,7 @@ public class Subject implements ISubject {
 	private String name;
 	
 	public Subject() {
-		
+		this(-1,"");
 	}
 	public Subject(Integer ID, String name) {
 		this.ID=ID;
@@ -19,6 +19,9 @@ public class Subject implements ISubject {
 	}
 	public String getName() {
 		return this.name;
+	}
+	public void setID(Integer ID) {
+		this.ID=ID;
 	}
 	public void setName(String name) {
 		this.name=name;
