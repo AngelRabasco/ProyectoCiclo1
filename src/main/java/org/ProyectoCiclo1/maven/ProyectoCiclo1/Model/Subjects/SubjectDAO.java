@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.User;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
@@ -11,6 +13,7 @@ import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
 public class SubjectDAO extends Subject {
 	private final static String getByID="SELECT * FROM subject WHERE ID=?";
 	private final static String getByName="SELECT * FROM subject WHERE Name=?";
+	private final static String getByOwner="SELECT * FROM subject WHERE User=?";
 	private final static String insertUpdate="INSERT INTO subject (ID,Name,User) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?,User=?";
 	private final static String delete="DELETE FROM subject WHERE ID=?";
 	
@@ -45,6 +48,58 @@ public class SubjectDAO extends Subject {
 	}
 	public SubjectDAO() {
 		super();
+	}
+	
+	public static List<Subject> searchByID(Integer ID) {
+		List<Subject> queryResult=new ArrayList<Subject>();
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByID);
+				query.setInt(1, ID);
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					queryResult.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return queryResult;
+	}
+	public static List<Subject> searchByName(String name) {
+		List<Subject> queryResult=new ArrayList<Subject>();
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByName);
+				query.setString(1, "%"+name+"%");
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					queryResult.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return queryResult;
+	}
+	public static List<Subject> searchByOwner(User owner) {
+		List<Subject> queryResultList=new ArrayList<Subject>();
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByOwner);
+				query.setInt(1, owner.getID());
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					queryResultList.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return queryResultList;
 	}
 	
 	public int save() {
