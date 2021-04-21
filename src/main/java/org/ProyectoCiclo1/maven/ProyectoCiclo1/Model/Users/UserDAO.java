@@ -3,7 +3,6 @@ package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +24,23 @@ public class UserDAO extends User {
 		this.ID=u.ID;
 		this.name=u.name;
 	}
+	public UserDAO(Integer ID) {
+		super();
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByID);
+				query.setInt(1, ID);
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					this.ID=rs.getInt("ID");
+					this.name=rs.getString("Name");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public UserDAO() {
 		super();
 	}
@@ -38,7 +54,7 @@ public class UserDAO extends User {
 				query.setInt(1, ID);
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new User(rs.getInt("ID"),rs.getString("name")));
+					queryResult.add(new User(rs.getInt("ID"),rs.getString("Name")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -55,7 +71,7 @@ public class UserDAO extends User {
 				query.setString(1, "%"+name+"%");
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new User(rs.getInt("ID"),rs.getString("name")));
+					queryResult.add(new User(rs.getInt("ID"),rs.getString("Name")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
