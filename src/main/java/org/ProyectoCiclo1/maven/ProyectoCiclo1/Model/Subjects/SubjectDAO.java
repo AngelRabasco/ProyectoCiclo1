@@ -29,21 +29,10 @@ public class SubjectDAO extends Subject {
 		this.owner=subject.owner;
 	}
 	public SubjectDAO(Integer ID) {
-		Connection con=Connect.getConnection();
-		if(con!=null) {
-			try {
-				PreparedStatement query=con.prepareStatement(getByID);
-				query.setInt(1, ID);
-				ResultSet rs=query.executeQuery();
-				while(rs.next()) {
-					this.ID=rs.getInt("ID");
-					this.name=rs.getString("Name");
-					this.owner=UserDAO.searchByID(rs.getInt("User")).get(0);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		Subject subject=searchByID(ID).get(0);
+		this.ID=subject.ID;
+		this.name=subject.name;
+		this.owner=subject.owner;
 	}
 	public SubjectDAO() {
 		super();
@@ -58,7 +47,10 @@ public class SubjectDAO extends Subject {
 				query.setInt(1, ID);
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+					queryResult.add(new Subject(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							UserDAO.searchByID(rs.getInt("User")).get(0)));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
