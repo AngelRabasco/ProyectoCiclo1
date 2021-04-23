@@ -29,7 +29,6 @@ public class SubjectDAO extends Subject {
 		this.owner=subject.owner;
 	}
 	public SubjectDAO(Integer ID) {
-		super();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {

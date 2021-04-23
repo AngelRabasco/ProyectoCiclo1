@@ -25,7 +25,6 @@ public class UserDAO extends User {
 		this.name=u.name;
 	}
 	public UserDAO(Integer ID) {
-		super();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
