@@ -14,7 +14,7 @@ public class SubjectDAO extends Subject {
 	private final static String getByID="SELECT * FROM subject WHERE ID=?";
 	private final static String getByName="SELECT * FROM subject WHERE Name=?";
 	private final static String getByOwner="SELECT * FROM subject WHERE User=?";
-	private final static String insertUpdate="INSERT INTO subject (ID,Name,User) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?,User=?";
+	private final static String insertUpdate="INSERT INTO subject (ID,Name,User) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?";
 	private final static String delete="DELETE FROM subject WHERE ID=?";
 	
 	public SubjectDAO(Integer ID, String name, User owner) {
@@ -112,7 +112,6 @@ public class SubjectDAO extends Subject {
 				query.setString(2, this.name);
 				query.setInt(3, this.owner.getID());
 				query.setString(4, this.name);
-				query.setInt(5, this.owner.getID());
 				result=query.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
