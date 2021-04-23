@@ -15,7 +15,6 @@ public interface IEntry {
 	public void setName(String name);
 	public void setDescription(String description);
 	public void setSubject(Subject subject);
-	public void setCreationDate();
-	public void setLastEdited();
-	
+	public void setCreationDate(LocalDateTime date);
+	public void setLastEdited(LocalDateTime date);
 }
