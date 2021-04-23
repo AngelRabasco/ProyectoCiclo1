@@ -7,9 +7,15 @@ public interface IEntry {
 	
 	public Integer getID();
 	public String getName();
+	public String getDescription();
 	public ISubject getSubject();
 	public LocalDateTime getCreationDate();
+	public LocalDateTime getLastEdited();
+	public void setID(Integer ID);
 	public void setName(String name);
+	public void setDescription(String description);
 	public void setSubject(Subject subject);
+	public void setCreationDate();
+	public void setLastEdited();
 	
 }
