@@ -21,7 +21,7 @@ public class SubjectDAO extends Subject {
 		super(ID,name,owner);
 	}
 	public SubjectDAO(String name, User owner) {
-		super(name, owner);
+		super(name,owner);
 	}
 	public SubjectDAO(Subject subject) {
 		this.ID=subject.ID;
@@ -38,7 +38,7 @@ public class SubjectDAO extends Subject {
 				while(rs.next()) {
 					this.ID=rs.getInt("ID");
 					this.name=rs.getString("Name");
-					this.owner=UserDAO.searchByID(rs.getInt("User")).get(0);
+					this.owner=new UserDAO(rs.getInt("User"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -58,7 +58,10 @@ public class SubjectDAO extends Subject {
 				query.setInt(1, ID);
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+					queryResult.add(new Subject(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							new UserDAO(rs.getInt("User"))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -75,7 +78,10 @@ public class SubjectDAO extends Subject {
 				query.setString(1, "%"+name+"%");
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+					queryResult.add(new Subject(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							new UserDAO(rs.getInt("User"))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -92,7 +98,10 @@ public class SubjectDAO extends Subject {
 				query.setInt(1, owner.getID());
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResultList.add(new Subject(rs.getInt("ID"),rs.getString("Name"),UserDAO.searchByID(rs.getInt("User")).get(0)));
+					queryResultList.add(new Subject(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							new UserDAO(rs.getInt("User"))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

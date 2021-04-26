@@ -20,9 +20,9 @@ public class UserDAO extends User {
 	public UserDAO(String name) {
 		super(name);
 	}
-	public UserDAO(User u) {
-		this.ID=u.ID;
-		this.name=u.name;
+	public UserDAO(User user) {
+		this.ID=user.ID;
+		this.name=user.name;
 	}
 	public UserDAO(Integer ID) {
 		Connection con=Connect.getConnection();
@@ -53,7 +53,9 @@ public class UserDAO extends User {
 				query.setInt(1, ID);
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new User(rs.getInt("ID"),rs.getString("Name")));
+					queryResult.add(new User(
+							rs.getInt("ID"),
+							rs.getString("Name")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -70,7 +72,9 @@ public class UserDAO extends User {
 				query.setString(1, "%"+name+"%");
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new User(rs.getInt("ID"),rs.getString("Name")));
+					queryResult.add(new User(
+							rs.getInt("ID"),
+							rs.getString("Name")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

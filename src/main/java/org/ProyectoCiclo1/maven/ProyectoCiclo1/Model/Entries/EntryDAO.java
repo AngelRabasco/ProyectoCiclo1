@@ -33,13 +33,24 @@ public class EntryDAO extends Entry {
 		this.lastEdited=entry.lastEdited;
 	}
 	public EntryDAO(Integer ID) {
-		Entry entry=searchByID(ID).get(0);
-		this.ID=entry.ID;
-		this.name=entry.name;
-		this.description=entry.description;
-		this.subject=entry.subject;
-		this.creationDate=entry.creationDate;
-		this.lastEdited=entry.lastEdited;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query = con.prepareStatement(getByID);
+				query.setInt(1, ID);
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					this.ID=rs.getInt("ID");
+					this.name=rs.getString("Name");
+					this.description=rs.getString("Description");
+					this.subject=new SubjectDAO(rs.getInt("ID"));
+					this.creationDate=rs.getTimestamp("CreationDate").toLocalDateTime();
+					this.lastEdited=rs.getTimestamp("LastEdited").toLocalDateTime();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	public EntryDAO() {
 		super();
@@ -49,9 +60,8 @@ public class EntryDAO extends Entry {
 		List<Entry> queryResult=new ArrayList<Entry>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
-			PreparedStatement query;
 			try {
-				query = con.prepareStatement(getByID);
+				PreparedStatement query = con.prepareStatement(getByID);
 				query.setInt(1, ID);
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
@@ -59,7 +69,7 @@ public class EntryDAO extends Entry {
 							rs.getInt("ID"),
 							rs.getString("Name"),
 							rs.getString("Description"),
-							SubjectDAO.searchByID(rs.getInt("Subject")).get(0),
+							new SubjectDAO(rs.getInt("ID")),
 							rs.getTimestamp("CreationDate").toLocalDateTime(),
 							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
