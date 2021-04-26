@@ -15,19 +15,30 @@ public class UserDAO extends User {
 	private final static String delete="DELETE FROM user WHERE ID=?";
 	
 	public UserDAO(Integer ID, String name) {
-		super(ID, name);
+		super(ID,name);
 	}
 	public UserDAO(String name) {
 		super(name);
 	}
-	public UserDAO(User user) {
-		this.ID=user.ID;
-		this.name=user.name;
+	public UserDAO(User u) {
+		this.ID=u.ID;
+		this.name=u.name;
 	}
 	public UserDAO(Integer ID) {
-		User user=searchByID(ID).get(0);
-		this.ID=user.ID;
-		this.name=user.name;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByID);
+				query.setInt(1, ID);
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					this.ID=rs.getInt("ID");
+					this.name=rs.getString("Name");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	public UserDAO() {
 		super();
