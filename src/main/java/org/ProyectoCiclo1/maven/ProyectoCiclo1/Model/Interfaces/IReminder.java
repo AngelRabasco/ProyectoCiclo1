@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public interface IReminder {
 	
 	public LocalDateTime getDate();
-	public Integer getStatus();				//Returns 0 (Pending) or 1 (Done)
+	public Boolean getStatus();				//Returns false (Pending) or true (Done)
 	public void setDate(LocalDateTime date);
-	public void setStatus(Integer Status);
+	public void setStatus(Boolean Status);
 	
 }
