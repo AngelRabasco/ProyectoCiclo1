@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class Reminder extends Entry implements IReminder {
 	private LocalDateTime remindDate;
-	private Integer status;
+	private Boolean status;
 	
 	public Reminder() {
 		super();
@@ -15,19 +15,19 @@ public class Reminder extends Entry implements IReminder {
 	public Reminder(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited, LocalDateTime date) {
 		super(ID, name, description, subject, creation, edited);
 		this.remindDate=date;
-		this.status=0;
+		this.status=false;
 	}
 	
 	public LocalDateTime getDate() {
 		return this.remindDate;
 	}
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return this.status;
 	}
 	public void setDate(LocalDateTime date) {
 		this.remindDate=date;
 	}
-	public void setStatus(Integer Status) {
+	public void setStatus(Boolean Status) {
 		this.status=Status;
 	}
 }
