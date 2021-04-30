@@ -62,7 +62,7 @@ public class EntryDAO extends Entry {
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
-				PreparedStatement query = con.prepareStatement(getByID);
+				PreparedStatement query=con.prepareStatement(getByID);
 				query.setInt(1, ID);
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
@@ -80,6 +80,53 @@ public class EntryDAO extends Entry {
 		}
 		return queryResult;
 	}
+	public static List<Entry> searchByName(String name) {
+		List<Entry> queryResult=new ArrayList<Entry>();
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByName);
+				query.setString(1, name);
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					queryResult.add(new Entry(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							rs.getString("Description"),
+							new SubjectDAO(rs.getInt("ID")),
+							rs.getTimestamp("CreationDate").toLocalDateTime(),
+							rs.getTimestamp("LastEdited").toLocalDateTime()));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return queryResult;
+	}
+	public static List<Entry> searchBySubject(Subject subject) {
+		List<Entry> queryResult=new ArrayList<Entry>();
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getBySubject);
+				query.setInt(1, subject.getID());
+				ResultSet rs=query.executeQuery();
+				while(rs.next()) {
+					queryResult.add(new Entry(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							rs.getString("Description"),
+							new SubjectDAO(rs.getInt("ID")),
+							rs.getTimestamp("CreationDate").toLocalDateTime(),
+							rs.getTimestamp("LastEdited").toLocalDateTime()));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return queryResult;
+	}
+	
 	public int save() {
 		int result=0;
 		Connection con=Connect.getConnection();
@@ -97,6 +144,26 @@ public class EntryDAO extends Entry {
 				query.setInt(9, this.subject.getID());
 				query.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now()));
 				result=query.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	public int remove() {
+		int result=0;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement q=con.prepareStatement(delete);
+				q.setInt(1, this.ID);
+				result=q.executeUpdate();
+				this.ID=-123;
+				this.name="";
+				this.description="";
+				this.subject=new Subject();
+				this.creationDate=LocalDateTime.MIN;
+				this.lastEdited=LocalDateTime.MIN;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
