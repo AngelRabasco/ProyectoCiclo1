@@ -2,7 +2,6 @@ package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Interfaces.IReminder;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
-
 import java.time.LocalDateTime;
 
 public class Reminder extends Entry implements IReminder {
@@ -11,6 +10,8 @@ public class Reminder extends Entry implements IReminder {
 	
 	public Reminder() {
 		super();
+		this.remindDate=LocalDateTime.MIN;
+		this.status=false;
 	}
 	public Reminder(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited, LocalDateTime date) {
 		super(ID, name, description, subject, creation, edited);
