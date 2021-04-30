@@ -5,8 +5,8 @@ import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import java.time.LocalDateTime;
 
 public class Reminder extends Entry implements IReminder {
-	private LocalDateTime remindDate;
-	private Boolean status;
+	protected LocalDateTime remindDate;
+	protected Boolean status;
 	
 	public Reminder() {
 		super();
