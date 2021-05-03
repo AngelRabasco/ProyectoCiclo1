@@ -137,7 +137,7 @@ public class SubjectDAO extends Subject {
 				result=q.executeUpdate();
 				this.ID=-999;
 				this.name="";
-				this.owner=new User(-666,"");
+				this.owner=new User(-666,"","");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
