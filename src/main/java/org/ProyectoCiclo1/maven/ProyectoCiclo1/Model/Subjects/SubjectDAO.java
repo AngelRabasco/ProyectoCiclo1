@@ -13,8 +13,8 @@ import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
 public class SubjectDAO extends Subject {
 	private final static String getByID="SELECT * FROM subject WHERE ID=?";
 	private final static String getByName="SELECT * FROM subject WHERE Name=?";
-	private final static String getByOwner="SELECT * FROM subject WHERE User=?";
-	private final static String insertUpdate="INSERT INTO subject (ID,Name,User) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?";
+	private final static String getByOwner="SELECT * FROM subject WHERE ID_User=?";
+	private final static String insertUpdate="INSERT INTO subject (ID,Name,ID_User) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?";
 	private final static String delete="DELETE FROM subject WHERE ID=?";
 	
 	public SubjectDAO(Integer ID, String name, User owner) {
@@ -38,7 +38,7 @@ public class SubjectDAO extends Subject {
 				while(rs.next()) {
 					this.ID=rs.getInt("ID");
 					this.name=rs.getString("Name");
-					this.owner=new UserDAO(rs.getInt("User"));
+					this.owner=new UserDAO(rs.getInt("ID_User"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -61,7 +61,7 @@ public class SubjectDAO extends Subject {
 					queryResult.add(new Subject(
 							rs.getInt("ID"),
 							rs.getString("Name"),
-							new UserDAO(rs.getInt("User"))));
+							new UserDAO(rs.getInt("ID_User"))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -81,7 +81,7 @@ public class SubjectDAO extends Subject {
 					queryResult.add(new Subject(
 							rs.getInt("ID"),
 							rs.getString("Name"),
-							new UserDAO(rs.getInt("User"))));
+							new UserDAO(rs.getInt("ID_User"))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -101,7 +101,7 @@ public class SubjectDAO extends Subject {
 					queryResultList.add(new Subject(
 							rs.getInt("ID"),
 							rs.getString("Name"),
-							new UserDAO(rs.getInt("User"))));
+							new UserDAO(rs.getInt("ID_User"))));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
