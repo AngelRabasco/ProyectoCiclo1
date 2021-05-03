@@ -31,4 +31,8 @@ public class Reminder extends Entry implements IReminder {
 	public void setStatus(Boolean Status) {
 		this.status=Status;
 	}
+	
+	public String toString() {
+		return "Reminder [remindDate=" + remindDate + ", status=" + status + "]";
+	}
 }
