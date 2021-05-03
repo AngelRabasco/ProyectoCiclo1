@@ -33,6 +33,6 @@ public class Reminder extends Entry implements IReminder {
 	}
 	
 	public String toString() {
-		return "Reminder [remindDate=" + remindDate + ", status=" + status + "]";
+		return "Reminder ["+super.toString()+", remindDate=" + remindDate + ", status=" + status + "]";
 	}
 }
