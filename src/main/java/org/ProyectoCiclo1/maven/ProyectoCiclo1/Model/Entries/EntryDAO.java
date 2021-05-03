@@ -70,7 +70,7 @@ public class EntryDAO extends Entry {
 							rs.getInt("ID"),
 							rs.getString("Name"),
 							rs.getString("Description"),
-							new SubjectDAO(rs.getInt("ID")),
+							new SubjectDAO(rs.getInt("Subject")),
 							rs.getTimestamp("CreationDate").toLocalDateTime(),
 							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
@@ -93,7 +93,7 @@ public class EntryDAO extends Entry {
 							rs.getInt("ID"),
 							rs.getString("Name"),
 							rs.getString("Description"),
-							new SubjectDAO(rs.getInt("ID")),
+							new SubjectDAO(rs.getInt("Subject")),
 							rs.getTimestamp("CreationDate").toLocalDateTime(),
 							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
@@ -116,7 +116,7 @@ public class EntryDAO extends Entry {
 							rs.getInt("ID"),
 							rs.getString("Name"),
 							rs.getString("Description"),
-							new SubjectDAO(rs.getInt("ID")),
+							new SubjectDAO(rs.getInt("Subject")),
 							rs.getTimestamp("CreationDate").toLocalDateTime(),
 							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
