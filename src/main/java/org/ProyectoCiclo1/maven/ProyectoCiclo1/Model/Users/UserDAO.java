@@ -1,6 +1,7 @@
 package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 public class UserDAO extends User {
 	private final static String getByID="SELECT * FROM user WHERE ID=?";
 	private final static String getByName="SELECT * FROM user WHERE Name=?";
+	private final static String getPassword="SELECT Password FROM user WHERE ID=?";
 	private final static String insertUpdate="INSERT INTO user (ID,Name,Password) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?";
 	private final static String delete="DELETE FROM user WHERE ID=?";
 	
@@ -85,6 +87,27 @@ public class UserDAO extends User {
 			}
 		}
 		return queryResult;
+	}
+	
+	public Boolean checkPassword(String password, User user) {
+		Boolean result=false;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			PreparedStatement query;
+			try {
+				query = con.prepareStatement(getPassword);
+				query.setInt(1, user.ID);
+				ResultSet rs=query.executeQuery();
+				while(rs.next()){
+					if(new BCryptPasswordEncoder().matches(password, rs.getString("Password"))) {
+						result=true;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 	
 	public int save() {
