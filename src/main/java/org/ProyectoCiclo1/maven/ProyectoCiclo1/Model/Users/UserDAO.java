@@ -92,16 +92,35 @@ public class UserDAO extends User {
 		return queryResult;
 	}
 	
+	public Boolean logIn(String name, String password) {
+		Boolean result=false;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(getByName);
+				query.setString(1, name);
+				ResultSet rs=query.executeQuery();
+				if(rs.next()) {
+					if(checkPassword(password, new User(rs.getInt("ID"),rs.getString("Name"),password))) {
+						result=true;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 	public Boolean checkPassword(String password, User user) {
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			PreparedStatement query;
 			try {
-				query = con.prepareStatement(getPassword);
+				query=con.prepareStatement(getPassword);
 				query.setInt(1, user.ID);
 				ResultSet rs=query.executeQuery();
-				while(rs.next()){
+				if(rs.next()){
 					if(new BCryptPasswordEncoder().matches(password, rs.getString("Password"))) {
 						result=true;
 					}
