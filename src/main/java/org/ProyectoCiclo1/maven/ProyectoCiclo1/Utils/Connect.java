@@ -6,25 +6,21 @@ import java.sql.SQLException;
 
 public class Connect {
 	private static Connection con;
-	//Should go on XML
-	private final static String server="jdbc:mysql://127.0.0.1";
-	private final static String database="proyectociclo1";
-	private final static String username="root";
-	private final static String password="";
+	private final static String server=XMLReader.getConectionInfo("server");
+	private final static String database=XMLReader.getConectionInfo("database");
+	private final static String username=XMLReader.getConectionInfo("user");
+	private final static String password=XMLReader.getConectionInfo("password");
 	
 	public static void connect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con=DriverManager.getConnection(server+"/"+database,username,password);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			con=null;
 			e.printStackTrace();
 		}
-		
 	}
 	public static Connection getConnection() {
 		if(con==null) {
