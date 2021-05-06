@@ -10,13 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.util.logging.Level;
 
@@ -37,17 +34,15 @@ public class LoginController {
 		UserDAO dummy=new UserDAO();
 		if(dummy.logIn(this.userField.getText(),this.passwordField.getText())) {
 			try {
-				FXMLLoader loader=new FXMLLoader(App.class.getResource("MainMenu.fxml"));
-				Parent modal=loader.load();
+				Parent modal=FXMLLoader.load(App.class.getResource("MainMenu.fxml"));
 				Stage modalStage=new Stage();
-				modalStage.initModality(Modality.APPLICATION_MODAL);
 				modalStage.setTitle("Main Window");
 				modalStage.setResizable(false);
 				modalStage.initOwner(App.rootstage);
 				modalStage.setScene(new Scene(modal));
 				Stage currentStage=(Stage) loginButton.getScene().getWindow();
 				currentStage.close();
-				modalStage.showAndWait();
+				modalStage.show();
 			}catch (IOException ex){
 				Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 			}
