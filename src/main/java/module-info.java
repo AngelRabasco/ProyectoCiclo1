@@ -5,6 +5,7 @@ module org.ProyectoCiclo1.maven.ProyectoCiclo1 {
 	requires java.sql;
 	requires spring.security.core;
 	requires java.desktop;
+	requires javafx.graphics;
 
 	opens org.ProyectoCiclo1.maven.ProyectoCiclo1 to javafx.fxml;
 	exports org.ProyectoCiclo1.maven.ProyectoCiclo1;
