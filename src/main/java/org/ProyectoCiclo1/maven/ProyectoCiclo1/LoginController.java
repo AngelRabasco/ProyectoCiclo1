@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.util.logging.Level;
 
 public class LoginController {
@@ -25,27 +24,17 @@ public class LoginController {
 	private PasswordField passwordField;
 	@FXML
 	private Button loginButton;
+	@FXML
+	private Button signupButton;
 	
 	@FXML
 	public void initialize(URL url, ResourceBundle rb) {
 	}
+	
 	@FXML
 	protected void logIn() throws IOException {
-		UserDAO dummy=new UserDAO();
-		if(dummy.logIn(this.userField.getText(),this.passwordField.getText())) {
-			try {
-				Parent modal=FXMLLoader.load(App.class.getResource("MainMenu.fxml"));
-				Stage modalStage=new Stage();
-				modalStage.setTitle("Main Window");
-				modalStage.setResizable(false);
-				modalStage.initOwner(App.rootstage);
-				modalStage.setScene(new Scene(modal));
-				Stage currentStage=(Stage) loginButton.getScene().getWindow();
-				currentStage.close();
-				modalStage.show();
-			}catch (IOException ex){
-				Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-			}
+		if(new UserDAO().logIn(this.userField.getText(),this.passwordField.getText())) {
+			loadMainMenu();
 		}else{
 			Alert alert=new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
@@ -54,7 +43,35 @@ public class LoginController {
 			alert.showAndWait();
 		}
 	}
+	@FXML
+	protected void signUp() throws IOException {
+		if(new UserDAO().signUp(this.userField.getText(), this.passwordField.getText())==false) {
+			System.out.println("Usuario registrado");
+		}else{
+			Alert alert=new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error de registro");
+			alert.setContentText("Este nobre ya está en uso");
+			alert.showAndWait();
+		}
+	}
 	
+	@FXML
+	private void loadMainMenu() throws IOException {
+		try {
+			Parent modal=FXMLLoader.load(App.class.getResource("MainMenu.fxml"));
+			Stage modalStage=new Stage();
+			modalStage.setTitle("Main Window");
+			modalStage.setResizable(false);
+			modalStage.initOwner(App.rootstage);
+			modalStage.setScene(new Scene(modal));
+			Stage currentStage=(Stage) loginButton.getScene().getWindow();
+			currentStage.close();
+			modalStage.show();
+		}catch (IOException ex){
+			Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 	@FXML
 	private void switchToMainMenu() throws IOException {
 		App.setRoot("MainMenu");

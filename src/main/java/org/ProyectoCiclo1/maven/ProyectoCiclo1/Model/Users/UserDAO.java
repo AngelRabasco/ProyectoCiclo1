@@ -11,9 +11,9 @@ import java.sql.SQLException;
 
 public class UserDAO extends User {
 	private final static String getByID="SELECT * FROM user WHERE ID=?";
-	private final static String getByName="SELECT * FROM user WHERE Name=?";
+	private final static String getByName="SELECT * FROM user WHERE Name LIKE ?";
 	private final static String getPassword="SELECT Password FROM user WHERE ID=?";
-	private final static String insertUpdate="INSERT INTO user (ID,Name,Password) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?";
+	private final static String insertUpdate="INSERT INTO user (Name,Password) VALUES (?,?) ON DUPLICATE KEY UPDATE Name=?";
 	private final static String delete="DELETE FROM user WHERE ID=?";
 	
 	public UserDAO(Integer ID, String name, String password) {
@@ -111,6 +111,27 @@ public class UserDAO extends User {
 		}
 		return result;
 	}
+	public Boolean signUp(String name, String password) {
+		Boolean result=false;
+		Connection con=Connect.getConnection();
+		try {
+			if(con!=null) {
+				List<User> search=searchByName(name);
+				if(search.isEmpty()==false) {
+					if(search.get(0).name.equals(name)) {
+						result=true;
+					}else{
+						new UserDAO(name,password).save();
+					}
+				}else{
+					new UserDAO(name,password).save();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	public Boolean checkPassword(String password, User user) {
 		Boolean result=false;
 		Connection con=Connect.getConnection();
@@ -138,10 +159,9 @@ public class UserDAO extends User {
 		if(con!=null) {
 			try {
 				PreparedStatement query=con.prepareStatement(insertUpdate);
-				query.setInt(1, this.ID);
-				query.setString(2, this.name);
-				query.setString(3, this.password);
-				query.setString(4, this.name);
+				query.setString(1, this.name);
+				query.setString(2, this.password);
+				query.setString(3, this.name);
 				result=query.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
