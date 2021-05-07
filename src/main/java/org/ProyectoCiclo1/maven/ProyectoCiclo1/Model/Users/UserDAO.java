@@ -1,6 +1,7 @@
 package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Encrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,10 +122,10 @@ public class UserDAO extends User {
 					if(search.get(0).name.equals(name)) {
 						result=true;
 					}else{
-						new UserDAO(name,password).save();
+						new UserDAO(name,Encrypt.enrypt(password)).save();
 					}
 				}else{
-					new UserDAO(name,password).save();
+					new UserDAO(name,Encrypt.enrypt(password)).save();
 				}
 			}
 		} catch (Exception e) {

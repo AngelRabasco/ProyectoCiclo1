@@ -46,7 +46,7 @@ public class LoginController {
 	@FXML
 	protected void signUp() throws IOException {
 		if(new UserDAO().signUp(this.userField.getText(), this.passwordField.getText())==false) {
-			System.out.println("Usuario registrado");
+			logIn();
 		}else{
 			Alert alert=new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
