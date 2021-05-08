@@ -20,6 +20,9 @@ public class UserDAO extends User {
 	public UserDAO(Integer ID, String name, String password) {
 		super(ID,name,password);
 	}
+	public UserDAO(Integer ID, String name) {
+		super(ID,name);
+	}
 	public UserDAO(String name, String password) {
 		super(name,password);
 	}

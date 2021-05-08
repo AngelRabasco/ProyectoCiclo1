@@ -15,6 +15,10 @@ public class User implements IUser {
 		this.name=name;
 		this.password=password;
 	}
+	public User(Integer ID, String name) {
+		this.ID=ID;
+		this.name=name;
+	}
 	public User(String name, String password) {
 		this.name=name;
 		this.password=password;
