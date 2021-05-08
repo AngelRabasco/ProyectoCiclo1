@@ -2,8 +2,6 @@ package org.ProyectoCiclo1.maven.ProyectoCiclo1;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import java.net.URL;
-import java.util.ResourceBundle;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,13 +26,14 @@ public class LoginController {
 	private Button signupButton;
 	
 	@FXML
-	public void initialize(URL url, ResourceBundle rb) {
+	public void initialize() {
+		System.out.println("popo");
 	}
 	
 	@FXML
 	protected void logIn() throws IOException {
 		if(new UserDAO().logIn(this.userField.getText(),this.passwordField.getText())) {
-			loadMainMenu();
+			loadMainMenu(new UserDAO(UserDAO.searchByName(this.userField.getText()).get(0)));
 		}else{
 			Alert alert=new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
@@ -57,13 +56,14 @@ public class LoginController {
 	}
 	
 	@FXML
-	private void loadMainMenu() throws IOException {
+	private void loadMainMenu(UserDAO user) throws IOException {
 		try {
 			Parent modal=FXMLLoader.load(App.class.getResource("MainMenu.fxml"));
 			Stage modalStage=new Stage();
 			modalStage.setTitle("Main Window");
 			modalStage.setResizable(false);
 			modalStage.initOwner(App.rootstage);
+			modalStage.setUserData(user);
 			modalStage.setScene(new Scene(modal));
 			Stage currentStage=(Stage) loginButton.getScene().getWindow();
 			currentStage.close();

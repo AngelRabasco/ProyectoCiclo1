@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ProyectoCiclo1.maven.ProyectoCiclo1.MainMenuController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ProyectoCiclo1.maven.ProyectoCiclo1.MainMenuController">
    <children>
-      <JFXHamburger fx:id="ham1" layoutX="300.0" layoutY="200.0" />
+      <TableView fx:id="tv1" layoutX="640.0" layoutY="160.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tc1" prefWidth="75.0" text="C1" />
+          <TableColumn fx:id="tc2" prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <Label fx:id="labelID" layoutX="167.0" layoutY="143.0" text="Label" />
+      <Label fx:id="labelName" layoutX="234.0" layoutY="143.0" text="Label" />
+      <Button fx:id="buttonLoad" layoutX="383.0" layoutY="434.0" mnemonicParsing="false" onAction="#loadUserInfo" text="Load user" />
    </children>
 </AnchorPane>
