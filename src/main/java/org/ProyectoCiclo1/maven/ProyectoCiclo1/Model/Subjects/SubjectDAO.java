@@ -20,6 +20,9 @@ public class SubjectDAO extends Subject {
 	public SubjectDAO(Integer ID, String name, User owner) {
 		super(ID,name,owner);
 	}
+	public SubjectDAO(Integer ID, String name) {
+		super(ID,name);
+	}
 	public SubjectDAO(String name, User owner) {
 		super(name,owner);
 	}
@@ -100,8 +103,7 @@ public class SubjectDAO extends Subject {
 				while(rs.next()) {
 					queryResultList.add(new Subject(
 							rs.getInt("ID"),
-							rs.getString("Name"),
-							new UserDAO(rs.getInt("ID_User"))));
+							rs.getString("Name")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

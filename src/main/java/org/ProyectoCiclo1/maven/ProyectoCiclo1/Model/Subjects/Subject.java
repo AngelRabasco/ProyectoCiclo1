@@ -16,6 +16,10 @@ public class Subject implements ISubject {
 		this.name=name;
 		this.owner=owner;
 	}
+	public Subject(Integer ID, String name) {
+		this.ID=ID;
+		this.name=name;
+	}
 	public Subject(String name, User owner) {
 		this.name=name;
 		this.owner=owner;
