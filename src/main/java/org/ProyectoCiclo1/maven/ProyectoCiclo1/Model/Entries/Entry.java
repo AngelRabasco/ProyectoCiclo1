@@ -17,11 +17,18 @@ public class Entry implements IEntry {
 	public Entry() {
 		this(-1, "", "", new Subject(), LocalDateTime.now(), LocalDateTime.now());
 	}
-	public Entry(Integer ID, String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
+	public Entry(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited) {
 		this.ID=ID;
 		this.name=name;
 		this.description=description;
 		this.subject=subject;
+		this.creationDate=creation;
+		this.lastEdited=edited;
+	}
+	public Entry(Integer ID, String name, String description, LocalDateTime creation, LocalDateTime edited) {
+		this.ID=ID;
+		this.name=name;
+		this.description=description;
 		this.creationDate=creation;
 		this.lastEdited=edited;
 	}

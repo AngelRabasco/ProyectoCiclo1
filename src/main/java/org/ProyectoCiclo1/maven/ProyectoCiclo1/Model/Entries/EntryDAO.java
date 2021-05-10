@@ -19,8 +19,11 @@ public class EntryDAO extends Entry {
 	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,Subject=?,LastEdited=?";
 	private final static String delete="DELETE FROM entry WHERE ID=?";
 	
-	public EntryDAO(Integer ID, String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
+	public EntryDAO(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited) {
 		super(ID, name, description, subject, creation, edited);
+	}
+	public EntryDAO(Integer ID, String name, String description, LocalDateTime creation, LocalDateTime edited) {
+			super(ID, name, description, creation, edited);
 	}
 	public EntryDAO(String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
 		super(name, description, subject, creation, edited);
@@ -116,7 +119,6 @@ public class EntryDAO extends Entry {
 							rs.getInt("ID"),
 							rs.getString("Name"),
 							rs.getString("Description"),
-							new SubjectDAO(rs.getInt("Subject")),
 							rs.getTimestamp("CreationDate").toLocalDateTime(),
 							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
