@@ -45,6 +45,6 @@ public class Subject implements ISubject {
 	}
 	
 	public String toString() {
-		return "Subject [ID=" + ID + ", name=" + name + ", owner=" + owner + "]";
+		return name;
 	}
 }
