@@ -19,13 +19,13 @@ public class Reminder extends Entry implements IReminder {
 		this.status=status;
 	}
 	
-	public LocalDateTime getDate() {
+	public LocalDateTime getRemindDate() {
 		return this.remindDate;
 	}
 	public Boolean getStatus() {
 		return this.status;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setRemindDate(LocalDateTime date) {
 		this.remindDate=date;
 	}
 	public void setStatus(Boolean Status) {
