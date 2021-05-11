@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,16 +12,35 @@
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ProyectoCiclo1.maven.ProyectoCiclo1.MainMenuController">
    <children>
       <Separator layoutX="276.0" orientation="VERTICAL" prefHeight="526.0" prefWidth="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Label layoutX="108.0" layoutY="6.0" text="Asignaturas" />
-      <ListView fx:id="subjectList" layoutX="1.0" layoutY="23.0" onMouseClicked="#displayEntries" prefHeight="695.0" prefWidth="277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-      <TableView fx:id="entryTable" layoutX="277.0" prefHeight="720.0" prefWidth="1003.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columns>
-          <TableColumn fx:id="tableColumn1" prefWidth="149.0" text="Nombre" />
-          <TableColumn fx:id="tableColumn2" prefWidth="351.0" text="Descripción" />
-            <TableColumn fx:id="tableColumn3" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
-            <TableColumn fx:id="tableColumn4" prefWidth="106.0" text="Recordatorio" />
-            <TableColumn fx:id="tableColumn5" prefWidth="48.0" text="Estado" />
-        </columns>
-      </TableView>
+      <Label layoutX="104.0" layoutY="7.0" text="Asignaturas" />
+      <ListView fx:id="subjectList" layoutX="1.0" layoutY="23.0" onMouseClicked="#displayEntries" prefHeight="691.0" prefWidth="277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+      <TabPane fx:id="tabPane" layoutX="276.0" prefHeight="720.0" prefWidth="1002.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab fx:id="entryTab" text="Entradas">
+               <content>
+                  <TableView fx:id="entryTable" prefHeight="312.0" prefWidth="314.0">
+                    <columns>
+                      <TableColumn fx:id="entryColumn1" prefWidth="149.0" text="Nombre" />
+                      <TableColumn fx:id="entryColumn2" prefWidth="351.0" text="Descripción" />
+                        <TableColumn fx:id="entryColumn3" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
+                    </columns>
+                  </TableView>
+               </content>
+          </Tab>
+          <Tab fx:id="reminderTab" text="Recordatorios">
+               <content>
+                  <TableView fx:id="reminderTable" prefHeight="312.0" prefWidth="314.0">
+                     <columns>
+                        <TableColumn fx:id="reminderColumn1" prefWidth="149.0" text="Nombre" />
+                        <TableColumn fx:id="reminderColumn2" prefWidth="351.0" text="Descripción" />
+                        <TableColumn fx:id="reminderColumn3" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
+                        <TableColumn fx:id="reminderColumn4" prefWidth="118.0" text="Recordatorio" />
+                        <TableColumn fx:id="reminderColumn5" prefWidth="42.0" text="Estado" />
+                     </columns>
+                  </TableView>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
