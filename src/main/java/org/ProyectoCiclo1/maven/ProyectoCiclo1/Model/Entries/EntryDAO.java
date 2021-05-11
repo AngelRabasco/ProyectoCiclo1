@@ -3,6 +3,8 @@ package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.SubjectDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -106,8 +108,8 @@ public class EntryDAO extends Entry {
 		}
 		return queryResult;
 	}
-	public static List<Entry> searchBySubject(Subject subject) {
-		List<Entry> queryResult=new ArrayList<Entry>();
+	public static ObservableList<Entry> searchBySubject(Subject subject) {
+		ObservableList<Entry> queryResult=FXCollections.observableArrayList();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
@@ -115,12 +117,24 @@ public class EntryDAO extends Entry {
 				query.setInt(1, subject.getID());
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					queryResult.add(new Entry(
-							rs.getInt("ID"),
-							rs.getString("Name"),
-							rs.getString("Description"),
-							rs.getTimestamp("CreationDate").toLocalDateTime(),
-							rs.getTimestamp("LastEdited").toLocalDateTime()));
+					if(rs.getTimestamp("ReminderTime")==null) {
+						queryResult.add(new Entry(
+								rs.getInt("ID"),
+								rs.getString("Name"),
+								rs.getString("Description"),
+								rs.getTimestamp("CreationDate").toLocalDateTime(),
+								rs.getTimestamp("LastEdited").toLocalDateTime()));
+					}else{
+						queryResult.add(new Reminder(
+								rs.getInt("ID"),
+								rs.getString("Name"),
+								rs.getString("Description"),
+								new SubjectDAO(rs.getInt("Subject")),
+								rs.getTimestamp("CreationDate").toLocalDateTime(),
+								rs.getTimestamp("LastEdited").toLocalDateTime(),
+								rs.getTimestamp("ReminderTime").toLocalDateTime(),
+								rs.getBoolean("Status")));
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
