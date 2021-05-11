@@ -8,5 +8,6 @@ module org.ProyectoCiclo1.maven.ProyectoCiclo1 {
 	requires javafx.graphics;
 
 	opens org.ProyectoCiclo1.maven.ProyectoCiclo1 to javafx.fxml;
+	opens org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries to javafx.base;
 	exports org.ProyectoCiclo1.maven.ProyectoCiclo1;
 }
