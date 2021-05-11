@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ProyectoCiclo1.maven.ProyectoCiclo1.MainMenuController">
    <children>
-      <TableView fx:id="tv1" layoutX="640.0" layoutY="160.0" prefHeight="200.0" prefWidth="200.0">
+      <Separator layoutX="276.0" orientation="VERTICAL" prefHeight="526.0" prefWidth="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutX="108.0" layoutY="6.0" text="Asignaturas" />
+      <ListView fx:id="subjectList" layoutX="1.0" layoutY="23.0" onMouseClicked="#displayEntries" prefHeight="695.0" prefWidth="277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+      <TableView fx:id="entryTable" layoutX="277.0" prefHeight="720.0" prefWidth="1003.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
-          <TableColumn fx:id="tc1" prefWidth="75.0" text="C1" />
-          <TableColumn fx:id="tc2" prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="tableColumn1" prefWidth="149.0" text="Nombre" />
+          <TableColumn fx:id="tableColumn2" prefWidth="351.0" text="Descripción" />
+            <TableColumn fx:id="tableColumn3" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
+            <TableColumn fx:id="tableColumn4" prefWidth="106.0" text="Recordatorio" />
+            <TableColumn fx:id="tableColumn5" prefWidth="48.0" text="Estado" />
         </columns>
       </TableView>
-      <Label fx:id="labelID" layoutX="167.0" layoutY="143.0" text="Label" />
-      <Label fx:id="labelName" layoutX="234.0" layoutY="143.0" text="Label" />
-      <Button fx:id="buttonLoad" layoutX="383.0" layoutY="434.0" mnemonicParsing="false" onAction="#loadUserInfo" text="Load user" />
    </children>
 </AnchorPane>
