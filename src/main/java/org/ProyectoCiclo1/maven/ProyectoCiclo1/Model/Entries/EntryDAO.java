@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntryDAO extends Entry {
-	private final static String getByID="SELECT * FROM entry WHERE ID=?";
-	private final static String getByName="SELECT * FROM entry WHERE Name=?";
-	private final static String getBySubject="SELECT * FROM entry WHERE Subject=?";
+	private final static String getByID="SELECT * FROM entry WHERE ID=? AND ReminderTime IS NULL";
+	private final static String getByName="SELECT * FROM entry WHERE Name=? AND ReminderTime IS NULL";
+	private final static String getBySubject="SELECT * FROM entry WHERE Subject=? AND ReminderTime IS NULL";
 	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,Subject=?,LastEdited=?";
 	private final static String delete="DELETE FROM entry WHERE ID=?";
 	
@@ -117,24 +117,12 @@ public class EntryDAO extends Entry {
 				query.setInt(1, subject.getID());
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
-					if(rs.getTimestamp("ReminderTime")==null) {
-						queryResult.add(new Entry(
-								rs.getInt("ID"),
-								rs.getString("Name"),
-								rs.getString("Description"),
-								rs.getTimestamp("CreationDate").toLocalDateTime(),
-								rs.getTimestamp("LastEdited").toLocalDateTime()));
-					}else{
-						queryResult.add(new Reminder(
-								rs.getInt("ID"),
-								rs.getString("Name"),
-								rs.getString("Description"),
-								new SubjectDAO(rs.getInt("Subject")),
-								rs.getTimestamp("CreationDate").toLocalDateTime(),
-								rs.getTimestamp("LastEdited").toLocalDateTime(),
-								rs.getTimestamp("ReminderTime").toLocalDateTime(),
-								rs.getBoolean("Status")));
-					}
+					queryResult.add(new Entry(
+							rs.getInt("ID"),
+							rs.getString("Name"),
+							rs.getString("Description"),
+							rs.getTimestamp("CreationDate").toLocalDateTime(),
+							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
