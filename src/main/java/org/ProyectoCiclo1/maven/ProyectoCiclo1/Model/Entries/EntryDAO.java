@@ -18,7 +18,9 @@ public class EntryDAO extends Entry {
 	private final static String getByID="SELECT * FROM entry WHERE ID=? AND ReminderTime IS NULL";
 	private final static String getByName="SELECT * FROM entry WHERE Name=? AND ReminderTime IS NULL";
 	private final static String getBySubject="SELECT * FROM entry WHERE Subject=? AND ReminderTime IS NULL";
-	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,Subject=?,LastEdited=?";
+	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,LastEdited=?";
+	private final static String updateName="UPDATE entry SET Name=? WHERE ID=?";
+	private final static String updateDescription="UPDATE entry SET Description=? WHERE ID=?";
 	private final static String delete="DELETE FROM entry WHERE ID=?";
 	
 	public EntryDAO(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited) {
@@ -145,8 +147,37 @@ public class EntryDAO extends Entry {
 				query.setTimestamp(6, Timestamp.valueOf(this.lastEdited));
 				query.setString(7, this.name);
 				query.setString(8, this.description);
-				query.setInt(9, this.subject.getID());
-				query.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now()));
+				query.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+				result=query.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	public int updateName() {
+		int result=0;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(updateName);
+				query.setString(1, this.name);
+				query.setInt(2, this.ID);
+				result=query.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	public int updateDescription() {
+		int result=0;
+		Connection con=Connect.getConnection();
+		if(con!=null) {
+			try {
+				PreparedStatement query=con.prepareStatement(updateDescription);
+				query.setString(1, this.description);
+				query.setInt(2, this.ID);
 				result=query.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

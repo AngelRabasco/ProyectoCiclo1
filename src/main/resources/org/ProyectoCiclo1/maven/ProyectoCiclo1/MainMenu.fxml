@@ -18,24 +18,24 @@
         <tabs>
           <Tab fx:id="entryTab" text="Entradas">
                <content>
-                  <TableView fx:id="entryTable" prefHeight="312.0" prefWidth="314.0">
+                  <TableView fx:id="entryTable" editable="true" prefHeight="312.0" prefWidth="314.0">
                     <columns>
-                      <TableColumn fx:id="entryColumn1" prefWidth="149.0" text="Nombre" />
-                      <TableColumn fx:id="entryColumn2" prefWidth="351.0" text="Descripción" />
-                        <TableColumn fx:id="entryColumn3" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
+                      <TableColumn fx:id="entryColumnName" onEditCommit="#editEntryName" prefWidth="149.0" text="Nombre" />
+                      <TableColumn fx:id="entryColumnDescription" onEditCommit="#editEntryDescription" prefWidth="351.0" text="Descripción" />
+                        <TableColumn fx:id="entryColumnCreation" editable="false" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
                     </columns>
                   </TableView>
                </content>
           </Tab>
           <Tab fx:id="reminderTab" text="Recordatorios">
                <content>
-                  <TableView fx:id="reminderTable" prefHeight="312.0" prefWidth="314.0">
+                  <TableView fx:id="reminderTable" editable="true" prefHeight="312.0" prefWidth="314.0">
                      <columns>
-                        <TableColumn fx:id="reminderColumn1" prefWidth="149.0" text="Nombre" />
-                        <TableColumn fx:id="reminderColumn2" prefWidth="351.0" text="Descripción" />
-                        <TableColumn fx:id="reminderColumn3" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
-                        <TableColumn fx:id="reminderColumn4" prefWidth="118.0" text="Recordatorio" />
-                        <TableColumn fx:id="reminderColumn5" prefWidth="42.0" text="Estado" />
+                        <TableColumn fx:id="reminderColumnName" prefWidth="149.0" text="Nombre" />
+                        <TableColumn fx:id="reminderColumnDescription" prefWidth="351.0" text="Descripción" />
+                        <TableColumn fx:id="reminderColumnCreation" editable="false" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
+                        <TableColumn fx:id="reminderColumnReminder" prefWidth="118.0" text="Recordatorio" />
+                        <TableColumn fx:id="reminderColumnStatus" prefWidth="42.0" text="Estado" />
                      </columns>
                   </TableView>
                </content>

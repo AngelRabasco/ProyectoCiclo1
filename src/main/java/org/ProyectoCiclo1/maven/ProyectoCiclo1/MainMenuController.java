@@ -16,6 +16,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -36,30 +37,36 @@ public class MainMenuController {
 	@FXML
 	private TableView<Entry> entryTable;
 	@FXML
-	private TableColumn<Entry, String> entryColumn1;
+	private TableColumn<Entry, String> entryColumnName;
 	@FXML
-	private TableColumn<Entry, String> entryColumn2;
+	private TableColumn<Entry, String> entryColumnDescription;
 	@FXML
-	private TableColumn<Entry, LocalDateTime> entryColumn3;
+	private TableColumn<Entry, LocalDateTime> entryColumnCreation;
 	@FXML
 	private Tab reminderTab;
 	@FXML
 	private TableView<Reminder> reminderTable;
 	@FXML
-	private TableColumn<Reminder, String> reminderColumn1;
+	private TableColumn<Reminder, String> reminderColumnName;
 	@FXML
-	private TableColumn<Reminder, String> reminderColumn2;
+	private TableColumn<Reminder, String> reminderColumnDescription;
 	@FXML
-	private TableColumn<Reminder, LocalDateTime> reminderColumn3;
+	private TableColumn<Reminder, LocalDateTime> reminderColumnCreation;
 	@FXML
-	private TableColumn<Reminder, LocalDateTime> reminderColumn4;
+	private TableColumn<Reminder, LocalDateTime> reminderColumnReminder;
 	@FXML
-	private TableColumn<Reminder, Boolean> reminderColumn5;
+	private TableColumn<Reminder, Boolean> reminderColumnStatus;
 	
 	@FXML
 	public void initialize() {
 		//loadUserInfo();
 		loadSubjects();
+		entryColumnName.setCellFactory(TextFieldTableCell.forTableColumn());
+		entryColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+		reminderColumnName.setCellFactory(TextFieldTableCell.forTableColumn());
+		reminderColumnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+//		reminderColumnReminder.setCellFactory(null);
+//		reminderColumnStatus.setCellFactory(null);
 	}
 //	@FXML
 //	private void loadUserInfo() {
@@ -76,20 +83,35 @@ public class MainMenuController {
 	@FXML
 	private void displayEntries() {
 		entryTableList.removeAll(entryTableList);
-		entryColumn1.setCellValueFactory(new PropertyValueFactory<Entry, String>("name"));
-		entryColumn2.setCellValueFactory(new PropertyValueFactory<Entry, String>("description"));
-		entryColumn3.setCellValueFactory(new PropertyValueFactory<Entry, LocalDateTime>("creationDate"));
+		entryColumnName.setCellValueFactory(new PropertyValueFactory<Entry, String>("name"));
+		entryColumnDescription.setCellValueFactory(new PropertyValueFactory<Entry, String>("description"));
+		entryColumnCreation.setCellValueFactory(new PropertyValueFactory<Entry, LocalDateTime>("creationDate"));
 		entryTableList.addAll(EntryDAO.searchBySubject(subjectList.getSelectionModel().getSelectedItem()));
 		entryTable.setItems(entryTableList);
 		reminderTableList.removeAll(reminderTableList);
-		reminderColumn1.setCellValueFactory(new PropertyValueFactory<Reminder, String>("name"));
-		reminderColumn2.setCellValueFactory(new PropertyValueFactory<Reminder, String>("description"));
-		reminderColumn3.setCellValueFactory(new PropertyValueFactory<Reminder, LocalDateTime>("creationDate"));
-		reminderColumn4.setCellValueFactory(new PropertyValueFactory<Reminder, LocalDateTime>("remindDate"));
-		reminderColumn5.setCellValueFactory(new PropertyValueFactory<Reminder, Boolean>("status"));
+		reminderColumnName.setCellValueFactory(new PropertyValueFactory<Reminder, String>("name"));
+		reminderColumnDescription.setCellValueFactory(new PropertyValueFactory<Reminder, String>("description"));
+		reminderColumnCreation.setCellValueFactory(new PropertyValueFactory<Reminder, LocalDateTime>("creationDate"));
+		reminderColumnReminder.setCellValueFactory(new PropertyValueFactory<Reminder, LocalDateTime>("remindDate"));
+		reminderColumnStatus.setCellValueFactory(new PropertyValueFactory<Reminder, Boolean>("status"));
 		reminderTableList.addAll(ReminderDAO.searchBySubject(subjectList.getSelectionModel().getSelectedItem()));
 		reminderTable.setItems(reminderTableList);
+		System.out.println(entryTableList);
 	}
+	
+	@FXML
+	private void editEntryName(TableColumn.CellEditEvent<Entry, String> event) {
+		EntryDAO entry=new EntryDAO(event.getRowValue());
+		entry.setName(event.getNewValue());
+		entry.updateName();
+	}
+	@FXML
+	private void editEntryDescription(TableColumn.CellEditEvent<Entry, String> event) {
+		EntryDAO entry=new EntryDAO(event.getRowValue());
+		entry.setDescription(event.getNewValue());
+		entry.updateDescription();
+	}
+	
 	@FXML
 	private UserDAO recieveUserData() {
 		Stage stage=(Stage) anchorPane.getScene().getWindow();
