@@ -25,12 +25,23 @@ public class Entry implements IEntry {
 		this.creationDate=creation;
 		this.lastEdited=edited;
 	}
+	public Entry(Integer ID, String name, String description, Subject subject) {
+		this.ID=ID;
+		this.name=name;
+		this.description=description;
+		this.subject=subject;
+	}
 	public Entry(Integer ID, String name, String description, LocalDateTime creation, LocalDateTime edited) {
 		this.ID=ID;
 		this.name=name;
 		this.description=description;
 		this.creationDate=creation;
 		this.lastEdited=edited;
+	}
+	public Entry(String name, String description, Subject subject) {
+		this.name=name;
+		this.description=description;
+		this.subject=subject;
 	}
 	public Entry(String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
 		this.name=name;

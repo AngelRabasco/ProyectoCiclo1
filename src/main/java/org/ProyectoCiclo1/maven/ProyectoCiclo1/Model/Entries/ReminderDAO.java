@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.SubjectDAO;
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.User;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ReminderDAO extends Reminder {
 	private final static String getByID="SELECT * FROM entry WHERE ID=? AND ReminderTime IS NOT NULL";
-	private final static String getByName="SELECT * FROM entry WHERE Name=? AND ReminderTime IS NOT NULL";
+	private final static String getByName="SELECT * FROM entry WHERE Name LIKE ? AND ID_User=? AND ReminderTime IS NOT NULL";
 	private final static String getBySubject="SELECT * FROM entry WHERE Subject=? AND ReminderTime IS NOT NULL";
 	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited,ReminderTime,Status) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,Subject=?,LastEdited=?,ReminderTime=?,Status=?";
 	private final static String delete="DELETE FROM entry WHERE ID=?";
@@ -85,13 +86,14 @@ public class ReminderDAO extends Reminder {
 		}
 		return queryResult;
 	}
-	public static List<Reminder> searchByName(String name) {
+	public static List<Reminder> searchByName(String name, User user) {
 		List<Reminder> queryResult=new ArrayList<Reminder>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
 				PreparedStatement query=con.prepareStatement(getByName);
-				query.setString(1, name);
+				query.setString(1, "%"+name+"%");
+				query.setInt(2, user.getID());
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
 					queryResult.add(new Reminder(
@@ -136,13 +138,35 @@ public class ReminderDAO extends Reminder {
 		return queryResult;
 	}
 	
+	public static Boolean checkExists(String name, User user) {
+		Boolean result=false;
+		Connection con=Connect.getConnection();
+		try {
+			if(con!=null) {
+				List<Reminder> search=searchByName(name, user);
+				if(search.isEmpty()==false) {
+					if(search.get(0).name.equals(name)) {
+						result=true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public int save() {
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
 				PreparedStatement query=con.prepareStatement(insertUpdate);
-				query.setInt(1, this.ID);
+				try {
+					query.setInt(1, this.ID);
+				} catch (NullPointerException e) {
+					query.setNull(1, 0);
+				}
 				query.setString(2, this.name);
 				query.setString(3, this.description);
 				query.setInt(4, this.subject.getID());

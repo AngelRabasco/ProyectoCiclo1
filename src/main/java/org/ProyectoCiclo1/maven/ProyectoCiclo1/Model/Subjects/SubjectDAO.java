@@ -6,13 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries.Entry;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.User;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class SubjectDAO extends Subject {
 	private final static String getByID="SELECT * FROM subject WHERE ID=?";
-	private final static String getByName="SELECT * FROM subject WHERE Name=?";
+	private final static String getByName="SELECT * FROM subject WHERE Name LIKE ? AND ID_User=?";
 	private final static String getByOwner="SELECT * FROM subject WHERE ID_User=?";
 	private final static String insertUpdate="INSERT INTO subject (ID,Name,ID_User) VALUES (?,?,?) ON DUPLICATE KEY UPDATE Name=?";
 	private final static String delete="DELETE FROM subject WHERE ID=?";
@@ -72,13 +77,14 @@ public class SubjectDAO extends Subject {
 		}
 		return queryResult;
 	}
-	public static List<Subject> searchByName(String name) {
+	public static List<Subject> searchByName(String name, User user) {
 		List<Subject> queryResult=new ArrayList<Subject>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
 				PreparedStatement query=con.prepareStatement(getByName);
 				query.setString(1, "%"+name+"%");
+				query.setInt(2, user.getID());
 				ResultSet rs=query.executeQuery();
 				while(rs.next()) {
 					queryResult.add(new Subject(
@@ -92,8 +98,8 @@ public class SubjectDAO extends Subject {
 		}
 		return queryResult;
 	}
-	public static List<Subject> searchByOwner(User owner) {
-		List<Subject> queryResultList=new ArrayList<Subject>();
+	public static ObservableList<Subject> searchByOwner(User owner) {
+		ObservableList<Subject> queryResultList=FXCollections.observableArrayList();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
@@ -112,13 +118,35 @@ public class SubjectDAO extends Subject {
 		return queryResultList;
 	}
 	
+	public static Boolean checkExists(String name, User user) {
+		Boolean result=false;
+		Connection con=Connect.getConnection();
+		try {
+			if(con!=null) {
+				List<Subject> search=searchByName(name, user);
+				if(search.isEmpty()==false) {
+					if(search.get(0).name.equals(name)) {
+						result=true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public int save() {
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
 				PreparedStatement query=con.prepareStatement(insertUpdate);
-				query.setInt(1, this.ID);
+				try {
+					query.setInt(1, this.ID);
+				}catch (NullPointerException e){
+					query.setNull(1, 0);
+				}
 				query.setString(2, this.name);
 				query.setInt(3, this.owner.getID());
 				query.setString(4, this.name);

@@ -2,7 +2,11 @@ package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.SubjectDAO;
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.User;
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
+import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Encrypt;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.Connection;
@@ -18,16 +22,20 @@ public class EntryDAO extends Entry {
 	private final static String getByID="SELECT * FROM entry WHERE ID=? AND ReminderTime IS NULL";
 	private final static String getByName="SELECT * FROM entry WHERE Name=? AND ReminderTime IS NULL";
 	private final static String getBySubject="SELECT * FROM entry WHERE Subject=? AND ReminderTime IS NULL";
-	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,LastEdited=?";
-	private final static String updateName="UPDATE entry SET Name=? WHERE ID=?";
-	private final static String updateDescription="UPDATE entry SET Description=? WHERE ID=?";
+	private final static String insertUpdate="INSERT INTO entry (ID,Name,Description,Subject,CreationDate,LastEdited) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE Name=?,Description=?,Subject=?,LastEdited=?";
 	private final static String delete="DELETE FROM entry WHERE ID=?";
 	
 	public EntryDAO(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited) {
 		super(ID, name, description, subject, creation, edited);
 	}
+	public EntryDAO(Integer ID, String name, String description, Subject subject) {
+		super(ID,name,description,subject);
+	}
 	public EntryDAO(Integer ID, String name, String description, LocalDateTime creation, LocalDateTime edited) {
 			super(ID, name, description, creation, edited);
+	}
+	public EntryDAO(String name, String description, Subject subject) {
+		super(name,description,subject);
 	}
 	public EntryDAO(String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
 		super(name, description, subject, creation, edited);
@@ -123,6 +131,7 @@ public class EntryDAO extends Entry {
 							rs.getInt("ID"),
 							rs.getString("Name"),
 							rs.getString("Description"),
+							new SubjectDAO(rs.getInt("Subject")),
 							rs.getTimestamp("CreationDate").toLocalDateTime(),
 							rs.getTimestamp("LastEdited").toLocalDateTime()));
 				}
@@ -132,6 +141,23 @@ public class EntryDAO extends Entry {
 		}
 		return queryResult;
 	}
+	public static Boolean checkExists(String name) {
+		Boolean result=false;
+		Connection con=Connect.getConnection();
+		try {
+			if(con!=null) {
+				List<Entry> search=searchByName(name);
+				if(search.isEmpty()==false) {
+					if(search.get(0).name.equals(name)) {
+						result=true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	public int save() {
 		int result=0;
@@ -139,7 +165,11 @@ public class EntryDAO extends Entry {
 		if(con!=null) {
 			try {
 				PreparedStatement query=con.prepareStatement(insertUpdate);
-				query.setInt(1, this.ID);
+				try {
+					query.setInt(1, this.ID);
+				}catch (NullPointerException e){
+					query.setNull(1, 0);
+				}
 				query.setString(2, this.name);
 				query.setString(3, this.description);
 				query.setInt(4, this.subject.getID());
@@ -147,37 +177,8 @@ public class EntryDAO extends Entry {
 				query.setTimestamp(6, Timestamp.valueOf(this.lastEdited));
 				query.setString(7, this.name);
 				query.setString(8, this.description);
-				query.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
-				result=query.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
-	public int updateName() {
-		int result=0;
-		Connection con=Connect.getConnection();
-		if(con!=null) {
-			try {
-				PreparedStatement query=con.prepareStatement(updateName);
-				query.setString(1, this.name);
-				query.setInt(2, this.ID);
-				result=query.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
-	}
-	public int updateDescription() {
-		int result=0;
-		Connection con=Connect.getConnection();
-		if(con!=null) {
-			try {
-				PreparedStatement query=con.prepareStatement(updateDescription);
-				query.setString(1, this.description);
-				query.setInt(2, this.ID);
+				query.setInt(9, this.subject.getID());
+				query.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now()));
 				result=query.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -10,7 +10,7 @@ public class Reminder extends Entry implements IReminder {
 	
 	public Reminder() {
 		super();
-		this.remindDate=LocalDateTime.MIN;
+		this.remindDate=LocalDateTime.now();
 		this.status=false;
 	}
 	public Reminder(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited, LocalDateTime date, Boolean status) {

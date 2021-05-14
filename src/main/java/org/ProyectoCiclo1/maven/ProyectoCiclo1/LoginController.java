@@ -56,17 +56,19 @@ public class LoginController {
 	
 	@FXML
 	private void loadMainMenu(UserDAO user) throws IOException {
-		try {
-			Parent modal=FXMLLoader.load(App.class.getResource("MainMenu.fxml"));
-			Stage modalStage=new Stage();
-			modalStage.setTitle("Main Window");
-			modalStage.setResizable(false);
-			modalStage.initOwner(App.rootstage);
-			modalStage.setUserData(user);
-			modalStage.setScene(new Scene(modal));
+		try {	
+			FXMLLoader loader=new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+			Parent parent=loader.load();
+			MainMenuController mainMenuController=loader.getController();
+			mainMenuController.loadUserInfo(user);
+			mainMenuController.loadSubjects();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(parent));
+			stage.setTitle("Main window");
+			stage.setResizable(false);
 			Stage currentStage=(Stage) loginButton.getScene().getWindow();
 			currentStage.close();
-			modalStage.show();
+			stage.show();
 		}catch (IOException ex){
 			Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 		}

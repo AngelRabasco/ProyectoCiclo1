@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
@@ -13,15 +14,18 @@
    <children>
       <Separator layoutX="276.0" orientation="VERTICAL" prefHeight="526.0" prefWidth="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label layoutX="104.0" layoutY="7.0" text="Asignaturas" />
-      <ListView fx:id="subjectList" layoutX="1.0" layoutY="23.0" onMouseClicked="#displayEntries" prefHeight="691.0" prefWidth="277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
-      <TabPane fx:id="tabPane" layoutX="276.0" prefHeight="720.0" prefWidth="1002.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ListView fx:id="subjectList" layoutX="1.0" layoutY="23.0" onMouseClicked="#displayEntries" prefHeight="641.0" prefWidth="277.0" style="-fx-aligment: center;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" />
+      <Button fx:id="addSubjectButton" layoutX="78.0" layoutY="681.0" mnemonicParsing="false" onAction="#addSubject" prefHeight="25.0" prefWidth="59.0" text="Añadir" />
+      <Button fx:id="editSubjectButton" layoutX="143.0" layoutY="681.0" mnemonicParsing="false" onAction="#editSubject" prefHeight="25.0" prefWidth="59.0" text="Editar" />
+      <Button fx:id="deleteSubjectButton" layoutX="208.0" layoutY="681.0" mnemonicParsing="false" onAction="#deleteSubject" prefHeight="25.0" prefWidth="59.0" text="Eliminar" />
+      <TabPane fx:id="tabPane" layoutX="276.0" prefHeight="670.0" prefWidth="1002.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab fx:id="entryTab" text="Entradas">
                <content>
                   <TableView fx:id="entryTable" editable="true" prefHeight="312.0" prefWidth="314.0">
                     <columns>
-                      <TableColumn fx:id="entryColumnName" onEditCommit="#editEntryName" prefWidth="149.0" text="Nombre" />
-                      <TableColumn fx:id="entryColumnDescription" onEditCommit="#editEntryDescription" prefWidth="351.0" text="Descripción" />
+                      <TableColumn fx:id="entryColumnName" prefWidth="149.0" text="Nombre" />
+                      <TableColumn fx:id="entryColumnDescription" prefWidth="351.0" text="Descripción" />
                         <TableColumn fx:id="entryColumnCreation" editable="false" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
                     </columns>
                   </TableView>
@@ -31,8 +35,8 @@
                <content>
                   <TableView fx:id="reminderTable" editable="true" prefHeight="312.0" prefWidth="314.0">
                      <columns>
-                        <TableColumn fx:id="reminderColumnName" onEditCommit="#editEntryName" prefWidth="149.0" text="Nombre" />
-                        <TableColumn fx:id="reminderColumnDescription" onEditCommit="#editEntryDescription" prefWidth="351.0" text="Descripción" />
+                        <TableColumn fx:id="reminderColumnName" prefWidth="149.0" text="Nombre" />
+                        <TableColumn fx:id="reminderColumnDescription" prefWidth="351.0" text="Descripción" />
                         <TableColumn fx:id="reminderColumnCreation" editable="false" minWidth="0.0" prefWidth="120.0" text="Fecha de creación" />
                         <TableColumn fx:id="reminderColumnReminder" prefWidth="118.0" text="Recordatorio" />
                         <TableColumn fx:id="reminderColumnStatus" prefWidth="42.0" text="Estado" />
@@ -42,5 +46,8 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="addEntryButton" layoutX="1077.0" layoutY="681.0" mnemonicParsing="false" onAction="#addEntry" prefHeight="25.0" prefWidth="59.0" text="Añadir" />
+      <Button fx:id="editEntryButton" layoutX="1142.0" layoutY="681.0" mnemonicParsing="false" onAction="#editEntry" prefHeight="25.0" prefWidth="59.0" text="Editar" />
+      <Button fx:id="deleteEntryButton" layoutX="1207.0" layoutY="681.0" mnemonicParsing="false" onAction="#deleteEntry" prefHeight="25.0" prefWidth="59.0" text="Eliminar" />
    </children>
 </AnchorPane>
