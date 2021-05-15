@@ -9,7 +9,6 @@ import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries.ReminderDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.SubjectDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -76,6 +75,7 @@ public class MainMenuController {
 	
 	@FXML
 	public void initialize() {
+		//Da los valores a las columnas de las TableView
 		entryColumnName.setCellValueFactory(new PropertyValueFactory<Entry, String>("name"));
 		entryColumnDescription.setCellValueFactory(new PropertyValueFactory<Entry, String>("description"));
 		entryColumnCreation.setCellValueFactory(new PropertyValueFactory<Entry, String>("creationDate"));
@@ -87,15 +87,18 @@ public class MainMenuController {
 	}
 	@FXML
 	public void loadUserInfo(UserDAO userLogin) {
+		//Le otorga a user el usuario utilizado para iniciar sesión
 		this.user=userLogin;
 	}
 	
 	@FXML
 	public void loadSubjects() {
+		//Carga las asignaturas del usuario
 		subjectList.setItems(SubjectDAO.searchByOwner(user));
 	}
 	@FXML
 	private void displayEntries() {
+		//Carga las entradas y los recordatorios de la asignaturas seleccionadas
 		if(subjectList.getSelectionModel().getSelectedItem()!=null) {
 			entryTable.setItems(EntryDAO.searchBySubject(subjectList.getSelectionModel().getSelectedItem()));
 			reminderTable.setItems(ReminderDAO.searchBySubject(subjectList.getSelectionModel().getSelectedItem()));
@@ -105,10 +108,12 @@ public class MainMenuController {
 	
 	@FXML
 	private void addSubject() {
+		//Carga el editor de asignaturas y le pasa un Booleano con valor false para cambiar la forma en la que actua a la hora de guardar la asignatura
 		loadSubjectEditor(new Subject(), false);
 	}
 	@FXML
 	private void addEntry() {
+		//Carga el editor de entradas o recordatorios dependiendo de la pestaña en la que se encuentre, pasandole además un Booleano con para afectar la forma en la que se guarda
 		switch (tabPane.getSelectionModel().getSelectedItem().getText()) {
 		case "Entradas":
 			loadEntryEditor(new Entry(), false);
@@ -122,12 +127,14 @@ public class MainMenuController {
 	}
 	@FXML
 	private void editSubject() {
+		//Carga el editor de asignaturas con los valores de la asignatura seleccionada, y un Booleano de valor True para afectar a la hora del guardado
 		if(subjectList.getSelectionModel().getSelectedItem()!=null) {
 			loadSubjectEditor(subjectList.getSelectionModel().getSelectedItem(), true);
 		}
 	}
 	@FXML
-	private void editEntry() {	
+	private void editEntry() {
+		//Carga el editor de entradas o de recordatorios dependiendo de la pestaña seleccionada, y un Booleano de valor True para afectar el guardado
 		switch (tabPane.getSelectionModel().getSelectedItem().getText()) {
 		case "Entradas":
 			if(entryTable.getSelectionModel().getSelectedItem()!=null) {
@@ -145,6 +152,7 @@ public class MainMenuController {
 	}
 	@FXML
 	private void deleteSubject() {
+		//Elimina la asignatura seleccionada y actualiza la lista
 		if(subjectList.getSelectionModel().getSelectedItem()!=null) {
 			new SubjectDAO(subjectList.getSelectionModel().getSelectedItem()).remove();
 			loadSubjects();
@@ -152,6 +160,7 @@ public class MainMenuController {
 	}
 	@FXML
 	private void deleteEntry() {
+		//Elimina la entrada o recordatorio y la elimina de la lista
 		switch (tabPane.getSelectionModel().getSelectedItem().getText()) {
 		case "Entradas":
 			if(entryTable.getSelectionModel().getSelectedItem()!=null) {
@@ -172,6 +181,7 @@ public class MainMenuController {
 	
 	@FXML
 	private void loadSubjectEditor(Subject subject, Boolean mode) {
+		//Carga el editor de asignatura con los valores determinados y un Booleano que modifica la forma en la que actua
 		try {
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("SubjectEditor.fxml"));
 			Parent parent=loader.load();
@@ -188,7 +198,8 @@ public class MainMenuController {
 		}
 	}
 	@FXML
-	private void loadEntryEditor(Entry entry, Boolean mode) {	
+	private void loadEntryEditor(Entry entry, Boolean mode) {
+		//Carga el editor de entradas con los valores determinados y un Booleano que modifica la forma en la que actua
 		try {
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("EntryEditor.fxml"));
 			Parent parent=loader.load();
@@ -206,6 +217,7 @@ public class MainMenuController {
 	}
 	@FXML
 	private void loadReminderEditor(Reminder reminder, Boolean mode) {
+		//Carga el editor de recordatorios con los valores determinados y un Booleano que modifica la forma en la que actua
 		try {
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("ReminderEditor.fxml"));
 			Parent parent=loader.load();
@@ -224,6 +236,7 @@ public class MainMenuController {
 	}
 	
 	private void checkDate(ObservableList<Reminder> observableList) {
+		//Comprueba las fechas para monstrar una advertencia si un recordatorio ha pasado la fecha y no está completo
 		for(Reminder r:observableList) {
 			if(r.getStatus()==false&&r.getRemindDate().isBefore(LocalDateTime.now())) {
 				Alert alert=new Alert(Alert.AlertType.INFORMATION);
@@ -233,11 +246,5 @@ public class MainMenuController {
 				alert.showAndWait();
 			}
 		}
-	}
-	
-	@FXML
-	private UserDAO recieveUserData() {
-		Stage stage=(Stage) anchorPane.getScene().getWindow();
-		return (UserDAO)stage.getUserData();
 	}
 }
