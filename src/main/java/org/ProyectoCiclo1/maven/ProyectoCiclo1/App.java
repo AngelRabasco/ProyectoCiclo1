@@ -17,6 +17,7 @@ public class App extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		//Carga el login
 		scene = new Scene(loadFXML("Login"));
 		stage.setScene(scene);
 		stage.setTitle("Please Login");
@@ -29,6 +30,7 @@ public class App extends Application {
 	}
 
 	private static Parent loadFXML(String fxml) throws IOException {
+		//Genera el parent
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
 		return fxmlLoader.load();
 	}
