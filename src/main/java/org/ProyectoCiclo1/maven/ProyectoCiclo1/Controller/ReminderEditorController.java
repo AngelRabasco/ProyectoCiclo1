@@ -1,4 +1,4 @@
-package org.ProyectoCiclo1.maven.ProyectoCiclo1;
+package org.ProyectoCiclo1.maven.ProyectoCiclo1.Controller;
 
 import java.time.LocalDateTime;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries.Reminder;

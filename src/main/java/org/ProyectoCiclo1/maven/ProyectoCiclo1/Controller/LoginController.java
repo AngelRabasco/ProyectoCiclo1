@@ -1,4 +1,4 @@
-package org.ProyectoCiclo1.maven.ProyectoCiclo1;
+package org.ProyectoCiclo1.maven.ProyectoCiclo1.Controller;
 
 import java.io.IOException;
 import java.util.logging.Logger;
