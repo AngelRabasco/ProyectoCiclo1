@@ -9,18 +9,22 @@ public class Subject implements ISubject {
 	protected User owner;
 	
 	public Subject() {
+		//Crea una asignatura por defecto
 		this(-1,"",new User());
 	}
 	public Subject(Integer ID, String name, User owner) {
+		//Crea una asignatura con todos los valores
 		this.ID=ID;
 		this.name=name;
 		this.owner=owner;
 	}
 	public Subject(Integer ID, String name) {
+		//Crea una asignatura con todos los valores menos el usuario
 		this.ID=ID;
 		this.name=name;
 	}
 	public Subject(String name, User owner) {
+		//Crea una asignatura con todos los valores menos la ID
 		this.name=name;
 		this.owner=owner;
 	}

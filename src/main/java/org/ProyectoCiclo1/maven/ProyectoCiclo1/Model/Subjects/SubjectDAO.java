@@ -6,12 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries.Entry;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.User;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -23,20 +20,25 @@ public class SubjectDAO extends Subject {
 	private final static String delete="DELETE FROM subject WHERE ID=?";
 	
 	public SubjectDAO(Integer ID, String name, User owner) {
+		//Genera un SubjectDAO con todos los valores
 		super(ID,name,owner);
 	}
 	public SubjectDAO(Integer ID, String name) {
+		//Genera un SubjectDAO con todos los valores menos el usuario
 		super(ID,name);
 	}
 	public SubjectDAO(String name, User owner) {
+		//Genera un SubjectDAO con todos los valores menos la ID
 		super(name,owner);
 	}
 	public SubjectDAO(Subject subject) {
+		//Genera un SubjectDAO con una asignatura
 		this.ID=subject.ID;
 		this.name=subject.name;
 		this.owner=subject.owner;
 	}
 	public SubjectDAO(Integer ID) {
+		//Genera un SubjectDAO con los datos obtenidos de la base de datos
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
@@ -54,10 +56,12 @@ public class SubjectDAO extends Subject {
 		}
 	}
 	public SubjectDAO() {
+		//Genera un SubjectDAO por defecto
 		super();
 	}
 	
 	public static List<Subject> searchByID(Integer ID) {
+		//Devuelve la asignatura cuya ID coincida con la ID introducida
 		List<Subject> queryResult=new ArrayList<Subject>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -78,6 +82,7 @@ public class SubjectDAO extends Subject {
 		return queryResult;
 	}
 	public static List<Subject> searchByName(String name, User user) {
+		//Devuelve las asignatura cuyo nombre y usuario coincidan con los introducidos
 		List<Subject> queryResult=new ArrayList<Subject>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -99,6 +104,7 @@ public class SubjectDAO extends Subject {
 		return queryResult;
 	}
 	public static ObservableList<Subject> searchByOwner(User owner) {
+		//Devuelve las asignaturas que pretenezcan al mismo usuario
 		ObservableList<Subject> queryResultList=FXCollections.observableArrayList();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -119,6 +125,7 @@ public class SubjectDAO extends Subject {
 	}
 	
 	public static Boolean checkExists(String name, User user) {
+		//Comprueba si existe una asignatura con el numbre y usuario introducidos
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		try {
@@ -137,6 +144,7 @@ public class SubjectDAO extends Subject {
 	}
 	
 	public int save() {
+		//Guarda la asignatura
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -158,6 +166,7 @@ public class SubjectDAO extends Subject {
 		return result;
 	}
 	public int remove() {
+		//Elimina la asignatura
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
