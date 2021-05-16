@@ -9,11 +9,13 @@ public class Reminder extends Entry implements IReminder {
 	protected Boolean status;
 	
 	public Reminder() {
+		//Crea un recordatorio por defecto
 		super();
 		this.remindDate=LocalDateTime.now();
 		this.status=false;
 	}
 	public Reminder(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited, LocalDateTime date, Boolean status) {
+		//Crea un recordatorio con todos los calores
 		super(ID, name, description, subject, creation, edited);
 		this.remindDate=date;
 		this.status=status;

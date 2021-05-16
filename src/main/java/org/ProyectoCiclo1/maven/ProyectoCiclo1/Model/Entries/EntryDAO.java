@@ -2,11 +2,7 @@ package org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Entries;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.SubjectDAO;
-import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.User;
-import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Users.UserDAO;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Connect;
-import org.ProyectoCiclo1.maven.ProyectoCiclo1.Utils.Encrypt;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.Connection;
@@ -26,21 +22,27 @@ public class EntryDAO extends Entry {
 	private final static String delete="DELETE FROM entry WHERE ID=?";
 	
 	public EntryDAO(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited) {
+		//Genera una EntryDAO con todos los valores
 		super(ID, name, description, subject, creation, edited);
 	}
 	public EntryDAO(Integer ID, String name, String description, Subject subject) {
+		//Genera una EntryDAO con todos los valores menos la fechas
 		super(ID,name,description,subject);
 	}
 	public EntryDAO(Integer ID, String name, String description, LocalDateTime creation, LocalDateTime edited) {
+		//Genera una EntryDAO con todos los valores menos la asignatura
 			super(ID, name, description, creation, edited);
 	}
 	public EntryDAO(String name, String description, Subject subject) {
+		//Genera una EntryDAO con todos los valores menos la ID y las fechas
 		super(name,description,subject);
 	}
 	public EntryDAO(String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
+		//Genera una EntryDAO con todos los valores menos la ID
 		super(name, description, subject, creation, edited);
 	}
 	public EntryDAO(Entry entry) {
+		//Genera una EntryDAO con una entrada
 		this.ID=entry.ID;
 		this.name=entry.name;
 		this.description=entry.description;
@@ -49,6 +51,7 @@ public class EntryDAO extends Entry {
 		this.lastEdited=entry.lastEdited;
 	}
 	public EntryDAO(Integer ID) {
+		//Genera una EntryDAO con los datos recogidos de la base de datos
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
@@ -69,10 +72,12 @@ public class EntryDAO extends Entry {
 		}
 	}
 	public EntryDAO() {
+		//Genera una EntryDAO por defecto
 		super();
 	}
 	
 	public static List<Entry> searchByID(Integer ID){
+		//Devuelve la entrada que coincida con la ID introducida
 		List<Entry> queryResult=new ArrayList<Entry>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -96,6 +101,7 @@ public class EntryDAO extends Entry {
 		return queryResult;
 	}
 	public static List<Entry> searchByName(String name) {
+		//Devuelve las entradas que coincidan con el nombre introducido
 		List<Entry> queryResult=new ArrayList<Entry>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -119,6 +125,7 @@ public class EntryDAO extends Entry {
 		return queryResult;
 	}
 	public static ObservableList<Entry> searchBySubject(Subject subject) {
+		//Devuelve las entradas que coincidan con la asignatura introducida
 		ObservableList<Entry> queryResult=FXCollections.observableArrayList();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -142,6 +149,7 @@ public class EntryDAO extends Entry {
 		return queryResult;
 	}
 	public static Boolean checkExists(String name) {
+		//Comprueba si existe alguna entrada con el nombre introducido
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		try {
@@ -160,6 +168,7 @@ public class EntryDAO extends Entry {
 	}
 	
 	public int save() {
+		//Guarda la entrada en la base de datos
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -187,6 +196,7 @@ public class EntryDAO extends Entry {
 		return result;
 	}
 	public int remove() {
+		//Elimina la entrada en la base de datos
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {

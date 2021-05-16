@@ -15,9 +15,11 @@ public class Entry implements IEntry {
 	
 	
 	public Entry() {
+		//Genera una entrada por defecto
 		this(-1, "", "", new Subject(), LocalDateTime.now(), LocalDateTime.now());
 	}
 	public Entry(Integer ID, String name, String description, Subject subject, LocalDateTime creation, LocalDateTime edited) {
+		//Genera una entrada con todos los valores
 		this.ID=ID;
 		this.name=name;
 		this.description=description;
@@ -26,12 +28,14 @@ public class Entry implements IEntry {
 		this.lastEdited=edited;
 	}
 	public Entry(Integer ID, String name, String description, Subject subject) {
+		//Genera una entrada con todos los valores menos la fechas
 		this.ID=ID;
 		this.name=name;
 		this.description=description;
 		this.subject=subject;
 	}
 	public Entry(Integer ID, String name, String description, LocalDateTime creation, LocalDateTime edited) {
+		//Genera una entrada con todos los valores menos la asignatura
 		this.ID=ID;
 		this.name=name;
 		this.description=description;
@@ -39,11 +43,13 @@ public class Entry implements IEntry {
 		this.lastEdited=edited;
 	}
 	public Entry(String name, String description, Subject subject) {
+		//Genera una entrada con todos los valores menos la ID y las fechas
 		this.name=name;
 		this.description=description;
 		this.subject=subject;
 	}
 	public Entry(String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited) {
+		//Genera una entrada con todos los valores menos la ID
 		this.name=name;
 		this.description=description;
 		this.subject=subject;

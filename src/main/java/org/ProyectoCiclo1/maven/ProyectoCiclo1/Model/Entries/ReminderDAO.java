@@ -23,9 +23,11 @@ public class ReminderDAO extends Reminder {
 	private final static String delete="DELETE FROM entry WHERE ID=?";
 	
 	public ReminderDAO(Integer ID, String name, String description, Subject subject,LocalDateTime creation, LocalDateTime edited, LocalDateTime remind, Boolean status) {
+		//Crea un ReminderDAO con todos los valores
 		super(ID, name, description, subject, creation, edited, remind, status);
 	}
 	public ReminderDAO(Reminder reminder) {
+		//Crea un ReminderDAO con un recordatorio
 		this.ID=reminder.ID;
 		this.name=reminder.name;
 		this.description=reminder.description;
@@ -36,6 +38,7 @@ public class ReminderDAO extends Reminder {
 		this.status=reminder.status;
 	}
 	public ReminderDAO(Integer ID) {
+		//Crea un ReminderDAO con los datos obtenidos de la base de datos
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
@@ -58,10 +61,12 @@ public class ReminderDAO extends Reminder {
 		}
 	}
 	public ReminderDAO() {
+		//Crea un ReminderDAO por defecto
 		super();
 	}
 	
 	public static List<Reminder> searchByID(Integer ID){
+		//Devuelve el recordatorio cuya ID coincida con la introducida
 		List<Reminder> queryResult=new ArrayList<Reminder>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -87,6 +92,7 @@ public class ReminderDAO extends Reminder {
 		return queryResult;
 	}
 	public static List<Reminder> searchByName(String name, User user) {
+		//Devuelve el recordatorio cuya ID coincida con el nombre y usuario introducido
 		List<Reminder> queryResult=new ArrayList<Reminder>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -113,6 +119,7 @@ public class ReminderDAO extends Reminder {
 		return queryResult;
 	}
 	public static ObservableList<Reminder> searchBySubject(Subject subject) {
+		//Devuelve los recordatorio que sean parte se la asignatura introducida
 		ObservableList<Reminder> queryResult=FXCollections.observableArrayList();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -139,6 +146,7 @@ public class ReminderDAO extends Reminder {
 	}
 	
 	public static Boolean checkExists(String name, User user) {
+		//Comprueba si existe un recordatorio que coincida con el nombre y usuario introducido
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		try {
@@ -157,6 +165,7 @@ public class ReminderDAO extends Reminder {
 	}
 	
 	public int save() {
+		//Guarda el recordatorio
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -188,6 +197,7 @@ public class ReminderDAO extends Reminder {
 		return result;
 	}
 	public int remove() {
+		//Elimina el recordatorio
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
