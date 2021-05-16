@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 
 public class XMLReader {
 	public static String getConectionInfo(String data) {
+		//Lee el XML que contiene los datos para la conexión con la base de datos
     DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
     factory.setNamespaceAware(true);
     DocumentBuilder builder;

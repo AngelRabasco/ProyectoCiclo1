@@ -12,6 +12,7 @@ public class Connect {
 	private final static String password=XMLReader.getConectionInfo("password");
 	
 	public static void connect() {
+		//Crea una conexión con la base de datos
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con=DriverManager.getConnection(server+"/"+database,username,password);
@@ -23,6 +24,7 @@ public class Connect {
 		}
 	}
 	public static Connection getConnection() {
+		//Si la conexión no existe la crea
 		if(con==null) {
 			connect();
 		}
