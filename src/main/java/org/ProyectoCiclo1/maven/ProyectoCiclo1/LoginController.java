@@ -31,6 +31,7 @@ public class LoginController {
 	
 	@FXML
 	protected void logIn() throws IOException {
+		//Comprueba si el usuario existe, si lo está inicia, si no muestra un aviso
 		if(new UserDAO().logIn(this.userField.getText(),this.passwordField.getText())) {
 			loadMainMenu(new UserDAO(UserDAO.searchByName(this.userField.getText()).get(0)));
 		}else{
@@ -43,6 +44,7 @@ public class LoginController {
 	}
 	@FXML
 	protected void signUp() throws IOException {
+		//Comprueba si el usuario existe, si no existe lo crea e inicia sesiín, si existe muestra un aviso
 		if(new UserDAO().signUp(this.userField.getText(), this.passwordField.getText())==false) {
 			logIn();
 		}else{
@@ -56,6 +58,7 @@ public class LoginController {
 	
 	@FXML
 	private void loadMainMenu(UserDAO user) throws IOException {
+		//Carga el menú principal con los datos del usuario
 		try {	
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("MainMenu.fxml"));
 			Parent parent=loader.load();
@@ -72,9 +75,5 @@ public class LoginController {
 		}catch (IOException ex){
 			Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 		}
-	}
-	@FXML
-	private void switchToMainMenu() throws IOException {
-		App.setRoot("MainMenu");
 	}
 }
