@@ -18,23 +18,29 @@ public class UserDAO extends User {
 	private final static String delete="DELETE FROM user WHERE ID=?";
 	
 	public UserDAO(Integer ID, String name, String password) {
+		//Genera un UserDAO con todos los valores
 		super(ID,name,password);
 	}
 	public UserDAO(Integer ID, String name) {
+		//Genera un UserDAO con todos los valores menos la contraseña
 		super(ID,name);
 	}
 	public UserDAO(String name, String password) {
+		//Genera un UserDAO con todos los valores menos la ID
 		super(name,password);
 	}
 	public UserDAO(String name) {
+		//Genera un UserDAO con solo el nombre
 		super(name);
 	}
 	public UserDAO(User user) {
+		//Genera un UserDAO con un usuario
 		this.ID=user.ID;
 		this.name=user.name;
 		this.password=user.password;
 	}
 	public UserDAO(Integer ID) {
+		//Genera un UserDAO con lo datos obtenidos de la base de datos
 		Connection con=Connect.getConnection();
 		if(con!=null) {
 			try {
@@ -52,10 +58,12 @@ public class UserDAO extends User {
 		}
 	}
 	public UserDAO() {
+		//Genera un UserDAO por defecto
 		super();
 	}
 	
 	public static List<User> searchByID(Integer ID){
+		//Devuelve el usuario cuya ID coincida con la ID itroducida
 		List<User> queryResult=new ArrayList<User>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -76,6 +84,7 @@ public class UserDAO extends User {
 		return queryResult;
 	}
 	public static List<User> searchByName(String name) {
+		//Devuelve los usuarios cuyo nombre councida con el nombre introducido
 		List<User> queryResult=new ArrayList<User>();
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -97,6 +106,7 @@ public class UserDAO extends User {
 	}
 	
 	public Boolean logIn(String name, String password) {
+		//Comprueba que haya un usuario con el mismo nombre y contraseña
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -116,6 +126,7 @@ public class UserDAO extends User {
 		return result;
 	}
 	public Boolean signUp(String name, String password) {
+		//Comprueba que no exista un usuario y lo registra
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		try {
@@ -137,6 +148,7 @@ public class UserDAO extends User {
 		return result;
 	}
 	public Boolean checkPassword(String password, User user) {
+		//Comprueba que la contraseña introducida es igual a la almacenada en la base de datos
 		Boolean result=false;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -158,6 +170,7 @@ public class UserDAO extends User {
 	}
 	
 	public int save() {
+		//Guarda el usuario
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {
@@ -174,6 +187,7 @@ public class UserDAO extends User {
 		return result;
 	}
 	public int remove() {
+		//Elimina el usuario
 		int result=0;
 		Connection con=Connect.getConnection();
 		if(con!=null) {

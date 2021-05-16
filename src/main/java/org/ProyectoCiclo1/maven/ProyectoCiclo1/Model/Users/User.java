@@ -8,22 +8,27 @@ public class User implements IUser {
 	protected String password;
 	
 	public User() {
+		//Genera un usuario por defecto
 		this(-1,"","");
 	}
 	public User(Integer ID, String name, String password) {
+		//Genera un usuario con todos los valores
 		this.ID=ID;
 		this.name=name;
 		this.password=password;
 	}
 	public User(Integer ID, String name) {
+		//Genera un usuario con todos los valores menos la contraseña
 		this.ID=ID;
 		this.name=name;
 	}
 	public User(String name, String password) {
+		//Genera un usuario con todos los valores menos la ID
 		this.name=name;
 		this.password=password;
 	}
 	public User(String name) {
+	//Genera un usuario solo con el nombre
 		this.name=name;
 	}
 	
