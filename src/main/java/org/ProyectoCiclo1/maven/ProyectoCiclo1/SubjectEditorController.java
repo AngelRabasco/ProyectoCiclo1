@@ -1,4 +1,4 @@
-package org.ProyectoCiclo1.maven.ProyectoCiclo1.Controller;
+package org.ProyectoCiclo1.maven.ProyectoCiclo1;
 
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.Subject;
 import org.ProyectoCiclo1.maven.ProyectoCiclo1.Model.Subjects.SubjectDAO;
