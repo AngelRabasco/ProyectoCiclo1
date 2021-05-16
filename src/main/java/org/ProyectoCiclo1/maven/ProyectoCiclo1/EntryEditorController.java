@@ -38,6 +38,7 @@ public class EntryEditorController {
 	
 	@FXML
 	public void setFields(Entry entry, UserDAO owner, Boolean mode) {
+	//Carga las variable de la entrada en los campos
 		addOrEdit=mode;
 		user=owner;
 		entryID=entry.getID();
@@ -49,9 +50,12 @@ public class EntryEditorController {
 	
 	@FXML
 	private void save() {
+	//Guarda la entrada en la base de datos
 		if(addOrEdit==false) {
+			//Entra por este IF si estamos cargando el editor con el botón "Añadir"
 			if(nameField.getText().trim()!="") {
 				if(subjectList.getSelectionModel().getSelectedItem()!=null) {
+					//Si los datos están correctamente añadidos guarda la entrada y se cierra
 					new EntryDAO(null,
 							nameField.getText(),
 							descriptionField.getText(),
@@ -65,6 +69,7 @@ public class EntryEditorController {
 					alert.showAndWait();
 					closeWindow();
 				}else{
+					//Si detecta que no hay asignatura seleccionada muestra una alerta
 					Alert alert=new Alert(Alert.AlertType.ERROR);
 					alert.setHeaderText(null);
 					alert.setTitle("Error de registro");
@@ -72,6 +77,7 @@ public class EntryEditorController {
 					alert.showAndWait();
 				}
 			}else{
+				//Si detecta que el campo del nombre está vacio muestra una alerta
 				Alert alert=new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setTitle("Error de registro");
@@ -79,8 +85,10 @@ public class EntryEditorController {
 				alert.showAndWait();
 			}
 		}else{
+			//Entra por este ELSE si estamos cargando el editor con el botón "Editar"
 			if(nameField.getText().trim()!="") {
 				if(subjectList.getSelectionModel().getSelectedItem()==null) {
+					//Si los datos están correctamente añadidos guarda la entrada y se cierra
 					new EntryDAO(entryID,
 							nameField.getText(),
 							descriptionField.getText(),
@@ -94,6 +102,7 @@ public class EntryEditorController {
 					alert.showAndWait();
 					closeWindow();
 				}else{
+					//Si detecta que no hay asignatura seleccionada usa la asignatura que ya tenía asignada
 					new EntryDAO(entryID,
 							nameField.getText(),
 							descriptionField.getText(),
@@ -102,6 +111,7 @@ public class EntryEditorController {
 							LocalDateTime.now()).save();
 				}
 			}else{
+				//Si detecta que el campo del nombre está vacio muestra una alerta
 				Alert alert=new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setTitle("Error de actualización");

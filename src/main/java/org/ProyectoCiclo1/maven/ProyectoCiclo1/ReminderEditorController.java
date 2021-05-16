@@ -43,6 +43,7 @@ public class ReminderEditorController {
 	
 	@FXML
 	public void setFields(Reminder reminder, UserDAO owner, Boolean mode) {
+		//Carga las variable del recordatorio en los campos
 		addOrEdit=mode;
 		user=owner;
 		entryID=reminder.getID();
@@ -56,9 +57,12 @@ public class ReminderEditorController {
 	
 	@FXML
 	private void save() {
+		//Guarda el recordatio en la base de datos
 		if(addOrEdit==false) {
+			//Entra por este IF si estamos cargando el editor con el botón "Añadir"
 			if(nameField.getText().trim()!="") {
 				if(subjectList.getSelectionModel().getSelectedItem()!=null) {
+					//Si los datos están correctamente añadidos guarda el Recordatorio y se cierra
 					new ReminderDAO(null,
 							nameField.getText(),
 							descriptionField.getText(),
@@ -74,6 +78,7 @@ public class ReminderEditorController {
 					alert.showAndWait();
 					closeWindow();
 				}else{
+					//Si detecta que no hay asignatura seleccionada muestra una alerta
 					Alert alert=new Alert(Alert.AlertType.ERROR);
 					alert.setHeaderText(null);
 					alert.setTitle("Error de registro");
@@ -81,6 +86,7 @@ public class ReminderEditorController {
 					alert.showAndWait();
 				}
 			}else{
+				//Si detecta que el campo del nombre está vacio muestra una alerta
 				Alert alert=new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setTitle("Error de registro");
@@ -88,8 +94,10 @@ public class ReminderEditorController {
 				alert.showAndWait();
 			}
 		}else{
+			//Entra por este ELSE si estamos cargando el editor con el botón "Editar"
 			if(nameField.getText().trim()!="") {
 				if(subjectList.getSelectionModel().getSelectedItem()==null) {
+				//Si los datos están correctamente añadidos guarda el Recordatorio y se cierra
 					new ReminderDAO(entryID,
 							nameField.getText(),
 							descriptionField.getText(),
@@ -105,6 +113,7 @@ public class ReminderEditorController {
 					alert.showAndWait();
 					closeWindow();
 				}else{
+					//Si detecta que no hay asignatura seleccionada usa la asignatura que ya tenía asignada
 					new ReminderDAO(entryID,
 							nameField.getText(),
 							descriptionField.getText(),
@@ -115,6 +124,7 @@ public class ReminderEditorController {
 							checkBox.isSelected()).save();
 				}
 			}else{
+				//Si detecta que el campo del nombre está vacio muestra una alerta
 				Alert alert=new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setTitle("Error de actualización");
@@ -126,6 +136,7 @@ public class ReminderEditorController {
 	
 	@FXML
 	private void closeWindow() {
+		//Cierra la ventana
 		Stage currentStage=(Stage) saveEntryButton.getScene().getWindow();
 		currentStage.close();
 	}
